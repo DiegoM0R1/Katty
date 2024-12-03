@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flores Animadas</title>
+    <title>Flores y Gato Negro</title>
     <style>
         body {
             display: flex;
@@ -13,8 +13,9 @@
             margin: 0;
             background: linear-gradient(135deg, #ff0000, #ff00bf, #4000ff, #00e5ff, #00ff48, #ff5100);
             background-size: 400% 400%;
-            animation: backgroundAnimation 10s ease infinite;
-            flex-wrap: wrap;
+            animation: backgroundAnimation 15s ease infinite;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
         }
 
         @keyframes backgroundAnimation {
@@ -23,55 +24,74 @@
             100% { background-position: 0% 50%; }
         }
 
-        .flower-container {
+        .scene {
             display: flex;
+            flex-direction: column;
             justify-content: center;
-            align-items: flex-end;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            z-index: 10;
             width: 100%;
             max-width: 1200px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .flower-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
         }
 
         .flower {
             position: relative;
             width: 150px;
-            height: 250px; /* Updated height for including the stem */
-            margin: 20px;
+            height: 250px;
+            animation: flowerSway 4s infinite ease-in-out;
+        }
+
+        @keyframes flowerSway {
+            0%, 100% { transform: rotate(2deg); }
+            50% { transform: rotate(-2deg); }
         }
 
         .bloom {
             position: relative;
             width: 150px;
             height: 150px;
-            animation: rotate 6s infinite linear;
+            animation: rotate 8s infinite linear;
         }
 
         @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.05); }
+            100% { transform: rotate(360deg) scale(1); }
         }
 
         .petal {
             position: absolute;
-            width: 80px;
-            height: 80px;
-            background-color: #ffff1c;
-            border-radius: 50%;
-            animation: float 2s infinite ease-in-out;
+            width: 75px;
+            height: 75px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            border-radius: 50% 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            animation: float 3s infinite ease-in-out;
         }
 
-        .petal:nth-child(1) { top: 0; left: 35px; }
-        .petal:nth-child(2) { top: 35px; left: 0; }
-        .petal:nth-child(3) { top: 35px; left: 70px; }
-        .petal:nth-child(4) { top: 70px; left: 35px; }
+        .petal:nth-child(1) { top: 0; left: 37.5px; transform: rotate(0deg); }
+        .petal:nth-child(2) { top: 37.5px; left: 0; transform: rotate(90deg); }
+        .petal:nth-child(3) { top: 37.5px; left: 75px; transform: rotate(-90deg); }
+        .petal:nth-child(4) { top: 75px; left: 37.5px; transform: rotate(180deg); }
 
         .center {
             position: absolute;
-            top: 35px;
-            left: 35px;
-            width: 80px;
-            height: 80px;
-            background-color: #ffd000;
+            top: 37.5px;
+            left: 37.5px;
+            width: 75px;
+            height: 75px;
+            background: radial-gradient(#ffd700, #ffaa00);
             border-radius: 50%;
         }
 
@@ -81,108 +101,351 @@
             left: 65px;
             width: 20px;
             height: 100px;
-            background-color: #0a9d0a;
+            background: linear-gradient(to bottom, #0a9d0a, #2ecc71);
+            border-radius: 10px;
         }
 
-        /* Animación de los pétalos */
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
         }
 
-        /* Estilos para el modal */
+        .realistic-cat {
+            position: relative;
+            width: 200px;
+            height: 150px;
+            perspective: 1000px;
+            animation: catBreath 3s infinite ease-in-out;
+        }
+
+        @keyframes catBreath {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .cat-body {
+            position: absolute;
+            width: 150px;
+            height: 100px;
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            border-radius: 100px 80px 80px 100px;
+            box-shadow: 
+                inset -10px -10px 20px rgba(0,0,0,0.3),
+                0 10px 20px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .cat-head {
+            position: absolute;
+            width: 80px;
+            height: 60px;
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            border-radius: 50% 50% 20px 20px;
+            top: -40px;
+            left: 35px;
+            transform: rotate(-5deg);
+            box-shadow: 
+                inset -5px -5px 10px rgba(0,0,0,0.4),
+                0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        .cat-ear {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 30px solid #0d0d0d;
+            transform-origin: bottom center;
+        }
+
+        .cat-ear-left {
+            top: -20px;
+            left: 5px;
+            transform: rotate(-30deg);
+        }
+
+        .cat-ear-right {
+            top: -20px;
+            right: 5px;
+            transform: rotate(30deg);
+        }
+
+        .cat-eye {
+            position: absolute;
+            width: 15px;
+            height: 10px;
+            background: linear-gradient(135deg, #d4af37, #ffd700);
+            border-radius: 50%;
+            top: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .cat-eye-left {
+            left: 20px;
+            transform: rotate(-10deg);
+        }
+
+        .cat-eye-right {
+            right: 20px;
+            transform: rotate(10deg);
+        }
+
+        .cat-tail {
+            position: absolute;
+            width: 10px;
+            height: 100px;
+            background: linear-gradient(to bottom, #0d0d0d, #1a1a1a);
+            border-radius: 50px;
+            bottom: -30px;
+            right: 0;
+            transform-origin: top;
+            animation: tailWag 2s infinite ease-in-out;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        }
+
+        @keyframes tailWag {
+            0%, 100% { transform: rotate(10deg); }
+            50% { transform: rotate(-10deg); }
+        }
+
         .modal {
             display: none;
             position: fixed;
-            z-index: 1;
+            z-index: 1000;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(72, 0, 0, 0.5);
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
         }
 
         .modal-content {
             position: relative;
             margin: 15% auto;
-            padding: 20px;
-            width: 300px;
-            background-color: #5bffb8;
-            border-radius: 8px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            background: linear-gradient(135deg, #333, #111);
+            border-radius: 20px;
             text-align: center;
-            animation: showModal 0.5s ease forwards;
-        }
-
-        @keyframes showModal {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
+            color: white;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
         }
 
         .close {
             position: absolute;
             top: 10px;
             right: 15px;
-            font-size: 20px;
+            font-size: 30px;
+            color: #ff4136;
             cursor: pointer;
+            transition: transform 0.3s;
         }
 
+        .close:hover {
+            transform: scale(1.2) rotate(90deg);
+        }
+
+        .carousel {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-images img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .carousel-button.prev {
+            left: 10px;
+        }
+
+        .carousel-button.next {
+            right: 10px;
+        }
+
+        .carousel-button:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        @media (max-width: 768px) {
+            .flower {
+                width: 100px;
+                height: 200px;
+            }
+
+            .bloom {
+                width: 100px;
+                height: 100px;
+            }
+
+            .petal {
+                width: 50px;
+                height: 50px;
+            }
+
+            .center {
+                width: 50px;
+                height: 50px;
+            }
+
+            .stem {
+                top: 100px;
+                left: 40px;
+                width: 10px;
+                height: 100px;
+            }
+
+            .realistic-cat {
+                width: 150px;
+                height: 100px;
+            }
+
+            .cat-body {
+                width: 100px;
+                height: 75px;
+            }
+
+            .cat-head {
+                width: 60px;
+                height: 45px;
+                top: -30px;
+                left: 20px;
+            }
+
+            .cat-ear {
+                border-left: 15px solid transparent;
+                border-right: 15px solid transparent;
+                border-bottom: 25px solid #0d0d0d;
+            }
+
+            .cat-eye {
+                width: 10px;
+                height: 7px;
+            }
+
+            .cat-tail {
+                width: 7px;
+                height: 75px;
+                bottom: -20px;
+            }
+
+            .modal-content {
+                width: 90%;
+                max-width: 300px;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="scene">
+        <div class="flower-container">
+            <div class="flower">
+                <div class="bloom">
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="center"></div>
+                </div>
+                <div class="stem"></div>
+            </div>
+            <div class="flower">
+                <div class="bloom">
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="center"></div>
+                </div>
+                <div class="stem"></div>
+            </div>
+        </div>
 
-    <!-- Contenedor de flores -->
-    <div class="flower-container">
-        <!-- Varias flores -->
-        <div class="flower">
-            <div class="bloom">
-                <div class="petal"></div>
-                <div class="petal"></div>
-                <div class="petal"></div>
-                <div class="petal"></div>
-                <div class="center"></div>
+        <div class="realistic-cat">
+            <div class="cat-body">
+                <div class="cat-tail"></div>
             </div>
-            <div class="stem"></div>
-        </div>
-        <div class="flower">
-            <div class="bloom">
-                <div class="petal"></div>
-                <div class="petal"></div>
-                <div class="petal"></div>
-                <div class="petal"></div>
-                <div class="center"></div>
+            <div class="cat-head">
+                <div class="cat-ear cat-ear-left"></div>
+                <div class="cat-ear cat-ear-right"></div>
+                <div class="cat-eye cat-eye-left"></div>
+                <div class="cat-eye cat-eye-right"></div>
             </div>
-            <div class="stem"></div>
-        </div>
-        <div class="flower">
-            <div class="bloom">
-                <div class="petal"></div>
-                <div class="petal"></div>
-                <div class="petal"></div>
-                <div class="petal"></div>
-                <div class="center"></div>
-            </div>
-            <div class="stem"></div>
         </div>
     </div>
 
-    <!-- Modal -->
+    
+
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <p>¡Espero te guste este detalle te quiero amor!</p>
+            <p>¡HOLA ANGELITA!</p>
         </div>
     </div>
 
+    <audio id="audioPlayer" src="Silent Night - The Soundlings.mp3" style="display:none" preload="auto"></audio>
+
     <script>
-        // Mostrar el modal al cargar la página
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.carousel-images img');
+            if (index >= slides.length) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = slides.length - 1;
+            } else {
+                currentSlide = index;
+            }
+            const offset = -currentSlide * 100;
+            document.querySelector('.carousel-images').style.transform = `translateX(${offset}%)`;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
         window.onload = function() {
             document.getElementById("myModal").style.display = "block";
+            showSlide(currentSlide);
         };
 
-        // Función para cerrar el modal
         function closeModal() {
             document.getElementById("myModal").style.display = "none";
+            playSong();
+        }
+
+        function playSong() {
+            const audioPlayer = document.getElementById("audioPlayer");
+            audioPlayer.play();
         }
     </script>
 </body>
