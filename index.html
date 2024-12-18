@@ -3,48 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flores y Gato Negro</title>
+    <title>Playa con Flores y Gato</title>
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #ff0000, #ff00bf, #4000ff, #00e5ff, #00ff48, #ff5100);
-            background-size: 400% 400%;
-            animation: backgroundAnimation 15s ease infinite;
+            height: 100vh;
             overflow: hidden;
             font-family: Arial, sans-serif;
         }
 
-        @keyframes backgroundAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
         .scene {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
             position: relative;
-            z-index: 10;
             width: 100%;
-            max-width: 1200px;
-            padding: 20px;
-            box-sizing: border-box;
+            height: 100vh;
+            background: linear-gradient(180deg, 
+                #FF4500 0%,    /* Bright orange at top */
+                #FF6B4A 20%,   /* Lighter orange */
+                #FF9E80 40%,   /* Peachy orange */
+                #1b2c4a 65%,   /* Deep red-brown */
+                #142c32 100%); /* Darkest red-brown */
+            overflow: hidden;
         }
 
+        .sun {
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(#FFD700, #FF4500);
+            border-radius: 50%;
+            animation: glow 4s infinite alternate;
+            transform: translateX(-50%);
+        }
+
+        @keyframes glow {
+            from { 
+                box-shadow: 0 0 100px #FF4500,
+                           0 0 200px rgba(255, 69, 0, 0.5);
+            }
+            to { 
+                box-shadow: 0 0 150px #FF4500,
+                           0 0 300px rgba(255, 69, 0, 0.5);
+            }
+        }
+
+        .sand {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 30%;
+            background: linear-gradient(180deg, #3D1F1F, #2B1616);
+        }
+
+        .palm {
+            position: absolute;
+            bottom: 28%;
+            animation: palmSway 6s ease-in-out infinite;
+            transform-origin: bottom center;
+            filter: brightness(0.1); /* Makes palms appear as silhouettes */
+        }
+
+        .palm {
+            position: absolute;
+            bottom: 28%;
+            animation: palmSway 6s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+
+        @keyframes palmSway {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .palm-left {
+            left: 15%;
+        }
+
+        .palm-right {
+            right: 15%;
+            animation-delay: -3s;
+        }
+
+        .trunk {
+            position: relative;
+            width: 30px;
+            height: 160px;
+            background: linear-gradient(45deg, #8B4513, #A0522D);
+            border-radius: 50%/10%;
+            transform: rotate(-15deg);
+            box-shadow: -5px 5px 10px rgba(0,0,0,0.3);
+        }
+
+        .trunk::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                rgba(139,69,19,0.7) 0%,
+                rgba(160,82,45,0) 50%,
+                rgba(139,69,19,0.7) 100%);
+            border-radius: inherit;
+        }
+
+        .leaves {
+            position: absolute;
+            top: -50px;
+            left: -30px;
+            transform-origin: bottom center;
+            animation: leavesRustle 4s ease-in-out infinite;
+        }
+
+        @keyframes leavesRustle {
+            0%, 100% { transform: rotate(-2deg) scale(1); }
+            50% { transform: rotate(2deg) scale(1.05); }
+        }
+
+        .leaf {
+            position: absolute;
+            width: 100px;
+            height: 25px;
+            background: linear-gradient(to right, #228B22, #32CD32);
+            border-radius: 100px 0;
+            transform-origin: left center;
+            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .leaf:nth-child(1) { transform: rotate(-30deg); animation-delay: -0.2s; }
+        .leaf:nth-child(2) { transform: rotate(0deg); animation-delay: -0.4s; }
+        .leaf:nth-child(3) { transform: rotate(30deg); animation-delay: -0.6s; }
+
+        /* Existing flower and cat styles remain the same */
         .flower-container {
+            position: absolute;
+            bottom: 25%;
+            width: 100%;
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
+            justify-content: space-around;
         }
 
+        .flower {
+            transform: scale(0.7);
+        }
+
+        .realistic-cat {
+            position: absolute;
+            bottom: 22%;
+            left: 50%;
+            transform: translateX(-50%) scale(0.8);
+        }
+
+        /* Rest of your existing flower and cat styles */
         .flower {
             position: relative;
             width: 150px;
@@ -103,24 +215,6 @@
             height: 100px;
             background: linear-gradient(to bottom, #0a9d0a, #2ecc71);
             border-radius: 10px;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
-        }
-
-        .realistic-cat {
-            position: relative;
-            width: 200px;
-            height: 150px;
-            perspective: 1000px;
-            animation: catBreath 3s infinite ease-in-out;
-        }
-
-        @keyframes catBreath {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
         }
 
         .cat-body {
@@ -209,6 +303,7 @@
             50% { transform: rotate(-10deg); }
         }
 
+        
         .modal {
             display: none;
             position: fixed;
@@ -227,11 +322,29 @@
             padding: 30px;
             width: 90%;
             max-width: 400px;
-            background: linear-gradient(135deg, #333, #111);
+            background: linear-gradient(135deg, #ff7f50, #ff4757);
             border-radius: 20px;
             text-align: center;
             color: white;
             box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            animation: modalAppear 0.5s ease-out;
+        }
+
+        @keyframes modalAppear {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-content p {
+            font-size: 24px;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .close {
@@ -239,7 +352,7 @@
             top: 10px;
             right: 15px;
             font-size: 30px;
-            color: #ff4136;
+            color: white;
             cursor: pointer;
             transition: transform 0.3s;
         }
@@ -247,132 +360,33 @@
         .close:hover {
             transform: scale(1.2) rotate(90deg);
         }
-
-        .carousel {
-            position: relative;
-            max-width: 100%;
-            margin: auto;
-            overflow: hidden;
-            border-radius: 10px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-        }
-
-        .carousel-images {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        .carousel-images img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        .carousel-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0,0,0,0.5);
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 50%;
-        }
-
-        .carousel-button.prev {
-            left: 10px;
-        }
-
-        .carousel-button.next {
-            right: 10px;
-        }
-
-        .carousel-button:hover {
-            background-color: rgba(0,0,0,0.8);
-        }
-
-        @media (max-width: 768px) {
-            .flower {
-                width: 100px;
-                height: 200px;
-            }
-
-            .bloom {
-                width: 100px;
-                height: 100px;
-            }
-
-            .petal {
-                width: 50px;
-                height: 50px;
-            }
-
-            .center {
-                width: 50px;
-                height: 50px;
-            }
-
-            .stem {
-                top: 100px;
-                left: 40px;
-                width: 10px;
-                height: 100px;
-            }
-
-            .realistic-cat {
-                width: 150px;
-                height: 100px;
-            }
-
-            .cat-body {
-                width: 100px;
-                height: 75px;
-            }
-
-            .cat-head {
-                width: 60px;
-                height: 45px;
-                top: -30px;
-                left: 20px;
-            }
-
-            .cat-ear {
-                border-left: 15px solid transparent;
-                border-right: 15px solid transparent;
-                border-bottom: 25px solid #0d0d0d;
-            }
-
-            .cat-eye {
-                width: 10px;
-                height: 7px;
-            }
-
-            .cat-tail {
-                width: 7px;
-                height: 75px;
-                bottom: -20px;
-            }
-
-            .modal-content {
-                width: 90%;
-                max-width: 300px;
-            }
-        }
     </style>
 </head>
 <body>
     <div class="scene">
-        <div class="flower-container">
-            <div class="flower">
-                <div class="bloom">
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="center"></div>
-                </div>
-                <div class="stem"></div>
+        <div class="sun"></div>
+        
+        <div class="palm palm-left">
+            <div class="trunk"></div>
+            <div class="leaves">
+                <div class="leaf"></div>
+                <div class="leaf"></div>
+                <div class="leaf"></div>
             </div>
+        </div>
+        
+        <div class="palm palm-right">
+            <div class="trunk"></div>
+            <div class="leaves">
+                <div class="leaf"></div>
+                <div class="leaf"></div>
+                <div class="leaf"></div>
+            </div>
+        </div>
+
+        <div class="sand"></div>
+        
+        <div class="flower-container">
             <div class="flower">
                 <div class="bloom">
                     <div class="petal"></div>
@@ -397,17 +411,16 @@
             </div>
         </div>
     </div>
-
     
 
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <p>¡HOLA ANGELITA!</p>
+            <p>¡TE QUIERO ANGELITA!</p>
         </div>
     </div>
 
-    <audio id="audioPlayer" src="Silent Night - The Soundlings.mp3" style="display:none" preload="auto"></audio>
+    <audio id="audioPlayer" src="Daft Punk - Touch (Choral Version from Epilogue - Extended).mp3" style="display:none" preload="auto"></audio>
 
     <script>
         let currentSlide = 0;
