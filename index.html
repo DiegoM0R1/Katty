@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Para Katty de tu Cholasho❤️ - Versión 3D</title>
     <style>
         * {
@@ -289,6 +290,7 @@
             from { transform: scale(1); }
             to { transform: scale(1.2); }
         }
+
         /* Estilos para controles móviles */
     .mobile-controls {
         display: none; /* Oculto por defecto, se muestra en dispositivos móviles */
@@ -404,6 +406,22 @@
     </style>
 </head>
 <body>
+    <script>
+        // Mejor detección de dispositivos móviles (específicamente para iPhone)
+        function isMobileDevice() {
+            // Comprobación específica para iOS
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                         (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+            
+            // Comprobación general para otros dispositivos móviles
+            const isOtherMobile = /Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            return isIOS || isOtherMobile;
+        }
+        
+        // Definir la variable global para usarla en el resto del código
+        const isMobile = isMobileDevice();
+        </script>
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-heart">❤️</div>
         <div class="loading-text">Cargando nuestro mundo...</div>
@@ -1518,263 +1536,85 @@
                 }
             }, 5000);
         };
-
-
-        // Detectar si es un dispositivo móvil
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
-    // Si es un dispositivo móvil, añadir el texto de ayuda para móviles
-    if (isMobile) {
-        const mobileHint = document.createElement('div');
-        mobileHint.className = 'mobile-controls-hint';
-        mobileHint.innerHTML = 'Desliza para mirar alrededor y usa el joystick para moverte';
-        document.body.appendChild(mobileHint);
-        
-        // Ocultar el hint después de 5 segundos
-        setTimeout(() => {
-            mobileHint.style.opacity = '0';
-            setTimeout(() => {
-                mobileHint.style.display = 'none';
-            }, 1000);
-        }, 5000);
-    }
-    
-    // Configuración del joystick virtual
-    function setupMobileControls() {
-        // Referencias a elementos del DOM
-        const joystickBase = document.getElementById('joystick-base');
-        const joystickThumb = document.getElementById('joystick-thumb');
-        const mobileMessageBtn = document.getElementById('mobile-message');
-        const mobileMusicBtn = document.getElementById('mobile-music');
-        
-        // Variables para el joystick
-        let joystickActive = false;
-        let joystickOrigin = { x: 0, y: 0 };
-        let currentPosition = { x: 0, y: 0 };
-        let joystickVector = { x: 0, y: 0 };
-        
-        // Variables para el control de vista
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let touchActive = false;
-        
-        // Configurar el joystick
-        function initJoystick() {
-            const baseRect = joystickBase.getBoundingClientRect();
-            joystickOrigin = {
-                x: baseRect.left + baseRect.width / 2,
-                y: baseRect.top + baseRect.height / 2
-            };
-            joystickThumb.style.transform = 'translate(0px, 0px)';
-        }
-        
-        // Actualizar visualmente el joystick
-        function updateJoystickThumb() {
-            // Calcular el vector del joystick
-            const dx = currentPosition.x - joystickOrigin.x;
-            const dy = currentPosition.y - joystickOrigin.y;
-            
-            // Limitar el movimiento dentro del radio del joystick
-            const maxDistance = joystickBase.offsetWidth / 2;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            
-            if (distance > maxDistance) {
-                const angle = Math.atan2(dy, dx);
-                const limitedX = Math.cos(angle) * maxDistance;
-                const limitedY = Math.sin(angle) * maxDistance;
-                
-                joystickThumb.style.transform = `translate(${limitedX}px, ${limitedY}px)`;
-                
-                // Calcular vector normalizado para el movimiento (entre -1 y 1)
-                joystickVector = {
-                    x: limitedX / maxDistance,
-                    y: limitedY / maxDistance
-                };
-            } else {
-                joystickThumb.style.transform = `translate(${dx}px, ${dy}px)`;
-                
-                // Calcular vector normalizado para el movimiento (entre -1 y 1)
-                joystickVector = {
-                    x: dx / maxDistance,
-                    y: dy / maxDistance
-                };
-            }
-        }
-        
-        // Registrar cuando el joystick se activa
-        joystickBase.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            joystickActive = true;
-            const touch = e.touches[0];
-            currentPosition = { x: touch.clientX, y: touch.clientY };
-            updateJoystickThumb();
-        });
-        
-        // Registrar cuando el joystick se mueve
-        document.addEventListener('touchmove', (e) => {
-            // Solo procesar si hay toques
-            if (e.touches.length === 0) return;
-            
-            // Encontrar qué dedo está controlando el joystick y cuál está controlando la vista
-            for (let i = 0; i < e.touches.length; i++) {
-                const touch = e.touches[i];
-                const touchX = touch.clientX;
-                const touchY = touch.clientY;
-                
-                // Comprobar si este toque está en el joystick
-                const joystickRect = joystickBase.getBoundingClientRect();
-                const inJoystick = (
-                    touchX >= joystickRect.left - 50 &&
-                    touchX <= joystickRect.right + 50 &&
-                    touchY >= joystickRect.top - 50 &&
-                    touchY <= joystickRect.bottom + 50
-                );
-                
-                if (inJoystick && joystickActive) {
-                    // Este toque es para el joystick
-                    currentPosition = { x: touchX, y: touchY };
-                    updateJoystickThumb();
-                } else if (!inJoystick) {
-                    // Este toque es para la cámara
-                    if (!touchActive) {
-                        touchActive = true;
-                        touchStartX = touchX;
-                        touchStartY = touchY;
-                    } else {
-                        // Calcular deltas para la rotación de la cámara
-                        const deltaX = touchX - touchStartX;
-                        const deltaY = touchY - touchStartY;
-                        
-                        // Actualizar la rotación objetivo de la cámara
-                        targetRotationX -= deltaX * 0.01;
-                        targetRotationY = Math.max(-Math.PI/4, Math.min(Math.PI/4, targetRotationY - deltaY * 0.01));
-                        
-                        // Actualizar posición inicial para el próximo movimiento
-                        touchStartX = touchX;
-                        touchStartY = touchY;
-                    }
-                }
-            }
-        });
-        
-        // Registrar cuando el joystick se suelta
-        document.addEventListener('touchend', (e) => {
-            // Comprobar si todos los dedos se han levantado
-            if (e.touches.length === 0) {
-                // Resetear el joystick
-                joystickActive = false;
-                joystickThumb.style.transform = 'translate(0px, 0px)';
-                joystickVector = { x: 0, y: 0 };
-                
-                // Resetear el control de la cámara
-                touchActive = false;
-            } else {
-                // Comprobar si el dedo del joystick se ha levantado
-                let joystickTouchActive = false;
-                for (let i = 0; i < e.touches.length; i++) {
-                    const touch = e.touches[i];
-                    const joystickRect = joystickBase.getBoundingClientRect();
-                    const inJoystick = (
-                        touch.clientX >= joystickRect.left - 50 &&
-                        touch.clientX <= joystickRect.right + 50 &&
-                        touch.clientY >= joystickRect.top - 50 &&
-                        touch.clientY <= joystickRect.bottom + 50
-                    );
-                    
-                    if (inJoystick) {
-                        joystickTouchActive = true;
-                    }
-                }
-                
-                if (!joystickTouchActive) {
-                    joystickActive = false;
-                    joystickThumb.style.transform = 'translate(0px, 0px)';
-                    joystickVector = { x: 0, y: 0 };
-                }
-            }
-        });
-        
-        // Botones para controlar el mensaje y la música
-        mobileMessageBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            toggleScreen();
-        });
-        
-        mobileMusicBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            toggleMusic();
-        });
-        
-        // Modificar la función updateCamera para usar el joystick en móviles
-        const originalUpdateCamera = window.updateCamera;
-        window.updateCamera = function(delta) {
-            // Llamar a la función original para controles de teclado en PC
-            originalUpdateCamera(delta);
-            
-            // Añadir movimiento basado en el joystick para móviles
-            if (isMobile && (joystickVector.x !== 0 || joystickVector.y !== 0)) {
-                const speed = 10 * delta;
-                const direction = new THREE.Vector3();
-                
-                // Obtener la dirección frontal (excluir el componente Y para mantener el movimiento en el plano horizontal)
-                const frontVector = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion);
-                frontVector.y = 0;
-                frontVector.normalize();
-                
-                // Obtener la dirección lateral
-                const rightVector = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
-                rightVector.y = 0;
-                rightVector.normalize();
-                
-                // Aplicar las direcciones según el joystick
-                direction.add(frontVector.clone().multiplyScalar(-joystickVector.y));
-                direction.add(rightVector.clone().multiplyScalar(joystickVector.x));
-                
-                // Normalizar la dirección si hay movimiento
-                if (direction.length() > 0) {
-                    direction.normalize();
-                    camera.position.addScaledVector(direction, speed);
-                    
-                    // Limitar el movimiento dentro de un área
-                    camera.position.x = Math.max(-50, Math.min(50, camera.position.x));
-                    camera.position.z = Math.max(-50, Math.min(50, camera.position.z));
-                    
-                    // Mantener la altura
-                    camera.position.y = 5;
-                }
-            }
-        };
-        
-        // Inicializar el joystick
-        window.addEventListener('resize', initJoystick);
-        initJoystick();
-    }
-    
-    // Inicializar controles móviles cuando se carga la página
-    document.addEventListener('DOMContentLoaded', () => {
-        if (isMobile) {
-            setupMobileControls();
-        }
-    });
-
     </script>
-    <!-- Añade este código justo antes del cierre del body (antes de </body>) -->
-
-<!-- Controles móviles -->
-<div id="mobile-controls" class="mobile-controls">
-    <div class="joystick-container">
-        <div id="joystick-base" class="joystick-base">
-            <div id="joystick-thumb" class="joystick-thumb"></div>
-        </div>
-    </div>
-    <div class="mobile-buttons">
-        <button id="mobile-message" class="mobile-btn">
-            <span class="mobile-btn-icon">💌</span>
-        </button>
-        <button id="mobile-music" class="mobile-btn">
-            <span class="mobile-btn-icon">🎵</span>
-        </button>
-    </div>
-</div>
+    <script>
+        // Forzar la inicialización y visibilidad de los controles móviles
+        document.addEventListener('DOMContentLoaded', function() {
+            if (isMobileDevice()) {
+                console.log("Dispositivo móvil detectado, forzando controles móviles");
+                
+                // Forzar visibilidad de controles móviles
+                const styleSheet = document.createElement('style');
+                styleSheet.textContent = `
+                    .mobile-controls {
+                        display: block !important;
+                        z-index: 9999 !important;
+                    }
+                    
+                    .joystick-container {
+                        background: rgba(255, 255, 255, 0.3) !important;
+                        border: 3px solid rgba(255, 255, 255, 0.5) !important;
+                    }
+                    
+                    .joystick-base {
+                        background: rgba(255, 255, 255, 0.3) !important;
+                        border: 3px solid rgba(255, 255, 255, 0.5) !important;
+                    }
+                    
+                    .controls-hint, .screen-controls {
+                        display: none !important;
+                    }
+                `;
+                document.head.appendChild(styleSheet);
+                
+                // Asegurarnos de que el contenedor de controles móviles existe
+                let mobileControls = document.getElementById('mobile-controls');
+                if (!mobileControls) {
+                    mobileControls = document.createElement('div');
+                    mobileControls.id = 'mobile-controls';
+                    mobileControls.className = 'mobile-controls';
+                    mobileControls.innerHTML = `
+                        <div class="joystick-container">
+                            <div id="joystick-base" class="joystick-base">
+                                <div id="joystick-thumb" class="joystick-thumb"></div>
+                            </div>
+                        </div>
+                        <div class="mobile-buttons">
+                            <button id="mobile-message" class="mobile-btn">
+                                <span class="mobile-btn-icon">💌</span>
+                            </button>
+                            <button id="mobile-music" class="mobile-btn">
+                                <span class="mobile-btn-icon">🎵</span>
+                            </button>
+                        </div>
+                    `;
+                    document.body.appendChild(mobileControls);
+                }
+                
+                // Inicializar controles tras un breve retraso
+                setTimeout(function() {
+                    setupMobileControls();
+                    
+                    // Mostrar indicador visible
+                    const indicator = document.createElement('div');
+                    indicator.style.position = 'fixed';
+                    indicator.style.top = '10px';
+                    indicator.style.left = '10px';
+                    indicator.style.padding = '5px 10px';
+                    indicator.style.background = 'rgba(0,0,0,0.7)';
+                    indicator.style.color = 'white';
+                    indicator.style.borderRadius = '5px';
+                    indicator.style.zIndex = '10000';
+                    indicator.textContent = '✓ Controles móviles activos';
+                    document.body.appendChild(indicator);
+                    
+                    // Quitar el indicador después de 3 segundos
+                    setTimeout(function() {
+                        indicator.remove();
+                    }, 3000);
+                }, 500);
+            }
+        });
+        </script>
 </body>
 </html>
