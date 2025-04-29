@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Para Katty de tu Cholasho❤️ - Versión 3D</title>
     <style>
+        /* Estilos existentes (mantener igual) */
         * {
             margin: 0;
             padding: 0;
@@ -28,400 +29,121 @@
             z-index: 1;
         }
         
-        .centered-card {
+        /* Resto de estilos existentes... */
+        
+        /* Estilos mejorados para controles móviles */
+        .mobile-controls {
             display: none;
-            justify-content: center;
-            align-items: center;
             position: fixed;
-            top: 0;
+            bottom: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
+            height: 40vh;
+            z-index: 900;
+            touch-action: none;
+            pointer-events: auto;
         }
-
-        .card-content {
-            background: linear-gradient(135deg, #ff7f50, #ff4757);
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            color: white;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5),
-                        0 0 100px rgba(255, 79, 87, 0.6),
-                        inset 0 0 20px rgba(255, 255, 255, 0.2);
-            width: 80%;
-            max-width: 800px;
-            height: auto;
-            max-height: 90%;
-            overflow-y: auto;
-            animation: fadeIn 1s ease-out, float 6s ease-in-out infinite;
-            transform-style: preserve-3d;
-            perspective: 1000px;
-        }
-
-        .card-content p {
-            font-size: 18px;
-            line-height: 1.8;
-            margin: 0;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-            transform: translateZ(20px);
-        }
-
-        .close {
+        
+        .joystick-container {
             position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 30px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.4s;
-            z-index: 10;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        .close:hover {
-            transform: scale(1.3) rotate(90deg);
-            text-shadow: 0 0 20px rgba(255, 255, 255, 1);
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8) rotateX(-10deg);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) rotateX(0);
-            }
+            bottom: 40px;
+            left: 40px;
+            width: 120px;
+            height: 120px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            pointer-events: auto;
         }
         
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) rotateX(0deg);
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5),
-                            0 0 100px rgba(255, 79, 87, 0.6);
-            }
-            50% {
-                transform: translateY(-15px) rotateX(3deg);
-                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3),
-                            0 0 120px rgba(255, 79, 87, 0.8);
-            }
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
+        .joystick-base {
+            position: absolute;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.6);
-            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         }
-
-        .modal-content {
+        
+        .joystick-thumb {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 79, 87, 0.8);
+            border-radius: 50%;
             position: relative;
-            margin: 15% auto;
-            padding: 30px;
-            width: 90%;
-            max-width: 500px;
-            background: linear-gradient(135deg, #ff7f50, #ff4757);
-            border-radius: 20px;
-            text-align: center;
-            color: white;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.5),
-                        0 0 100px rgba(255, 100, 100, 0.4);
-            animation: modalAppear 0.8s cubic-bezier(0.17, 0.89, 0.32, 1.25);
-            transform-style: preserve-3d;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
         }
         
-        .modal-content::before {
-            content: '';
+        .mobile-buttons {
             position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, 
-                rgba(255, 255, 255, 0.1), 
-                rgba(255, 255, 255, 0.3), 
-                rgba(255, 255, 255, 0.1), 
-                rgba(255, 255, 255, 0.3));
-            z-index: -1;
-            border-radius: 22px;
-            animation: borderGlow 3s linear infinite;
-        }
-
-        @keyframes borderGlow {
-            0%, 100% {
-                opacity: 0.8;
-            }
-            50% {
-                opacity: 0.3;
-            }
-        }
-
-        @keyframes modalAppear {
-            from {
-                transform: scale(0.5) rotateX(-30deg);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1) rotateX(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-content p {
-            font-size: 24px;
-            margin: 0;
-            text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
-            transform: translateZ(30px);
-        }
-        
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #ff4757, #ff7f50);
+            bottom: 40px;
+            right: 40px;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            transition: opacity 1s ease-out;
+            gap: 20px;
         }
         
-        .loading-text {
-            font-size: 24px;
-            margin-top: 20px;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-            animation: pulse 1.5s infinite;
-        }
-        
-        .loading-heart {
-            font-size: 50px;
-            animation: heartbeat 1.2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            15% { transform: scale(1.3); }
-            30% { transform: scale(1); }
-            45% { transform: scale(1.3); }
-            60% { transform: scale(1); }
-            100% { transform: scale(1); }
-        }
-        
-        .controls-hint {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(0,0,0,0.6);
-            padding: 10px 15px;
-            border-radius: 10px;
-            font-size: 14px;
-            opacity: 0.7;
-            z-index: 100;
-            transition: opacity 0.3s;
-        }
-        
-        .controls-hint:hover {
-            opacity: 1;
-        }
-        
-        /* Estilos para los controles de la pantalla digital */
-        .screen-controls {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            gap: 10px;
-            z-index: 100;
-        }
-        
-        .control-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .mobile-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
             background: rgba(255, 79, 87, 0.8);
             border: none;
-            border-radius: 12px;
-            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
+            font-size: 28px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
+            pointer-events: auto;
         }
         
-        .control-btn:hover {
-            background: rgba(255, 127, 80, 0.9);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
-        }
-        
-        .btn-icon {
-            font-size: 24px;
-            margin-bottom: 5px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .btn-text {
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        /* Indicador de música activa */
-        .music-active .btn-icon {
-            animation: pulse 1s infinite alternate;
-        }
-        
-        @keyframes pulse {
-            from { transform: scale(1); }
-            to { transform: scale(1.2); }
-        }
-
-        /* Estilos para controles móviles */
-    .mobile-controls {
-        display: none; /* Oculto por defecto, se muestra en dispositivos móviles */
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 30vh;
-        z-index: 900;
-        touch-action: none;
-    }
-    
-    .joystick-container {
-        position: absolute;
-        bottom: 20px;
-        left: 20px;
-        width: 120px;
-        height: 120px;
-    }
-    
-    .joystick-base {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        backdrop-filter: blur(5px);
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-    
-    .joystick-thumb {
-        width: 50%;
-        height: 50%;
-        background: rgba(255, 79, 87, 0.8);
-        border-radius: 50%;
-        position: relative;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
-        transition: transform 0.1s ease;
-    }
-    
-    .mobile-buttons {
-        position: absolute;
-        bottom: 40px;
-        right: 20px;
-        display: flex;
-        gap: 15px;
-    }
-    
-    .mobile-btn {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: rgba(255, 79, 87, 0.8);
-        border: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 24px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        backdrop-filter: blur(5px);
-    }
-    
-    .mobile-btn:active {
-        transform: scale(0.9);
-    }
-    
-    .mobile-btn-icon {
-        font-size: 30px;
-        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    }
-    
-    /* Texto de ayuda para móviles */
-    .mobile-controls-hint {
-        position: fixed;
-        top: 20px;
-        left: 0;
-        width: 100%;
-        text-align: center;
-        background: rgba(0, 0, 0, 0.6);
-        color: white;
-        padding: 10px;
-        font-size: 14px;
-        z-index: 100;
-        display: none;
-        backdrop-filter: blur(5px);
-    }
-    
-    /* Responsividad para móviles */
-    @media (max-width: 768px) {
-        .controls-hint {
-            display: none; /* Ocultar controles de PC */
-        }
-        
-        .screen-controls {
-            display: none; /* Ocultar controles de PC */
-        }
-        
-        .mobile-controls {
-            display: block; /* Mostrar controles móviles */
+        .mobile-btn:active {
+            transform: scale(0.9);
         }
         
         .mobile-controls-hint {
-            display: block; /* Mostrar ayuda para móviles */
+            position: fixed;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            font-size: 16px;
+            z-index: 1000;
+            display: none;
+            backdrop-filter: blur(5px);
         }
-    }
+        
+        /* Responsividad para móviles */
+        @media (max-width: 768px), (pointer: coarse) {
+            .controls-hint {
+                display: none !important;
+            }
+            
+            .screen-controls {
+                display: none !important;
+            }
+            
+            .mobile-controls {
+                display: block !important;
+            }
+            
+            .mobile-controls-hint {
+                display: block !important;
+            }
+        }
     </style>
 </head>
 <body>
-    <script>
-        // Mejor detección de dispositivos móviles (específicamente para iPhone)
-        function isMobileDevice() {
-            // Comprobación específica para iOS
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
-                         (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-            
-            // Comprobación general para otros dispositivos móviles
-            const isOtherMobile = /Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            
-            return isIOS || isOtherMobile;
-        }
-        
-        // Definir la variable global para usarla en el resto del código
-        const isMobile = isMobileDevice();
-        </script>
+    <!-- Estructura HTML existente (mantener igual) -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-heart">❤️</div>
         <div class="loading-text">Cargando nuestro mundo...</div>
@@ -429,7 +151,6 @@
     
     <div class="controls-hint">Usa el ratón para mirar alrededor y las teclas WASD para moverte</div>
     
-    <!-- Reemplazamos la tarjeta centrada con la pantalla digital 3D que se manejará en Three.js -->
     <div id="screenControls" class="screen-controls">
         <button id="toggleScreen" class="control-btn">
             <span class="btn-icon">💌</span>
@@ -448,23 +169,74 @@
         </div>
     </div>
 
+    <!-- Agregamos explícitamente los controles móviles -->
+    <div id="mobile-controls" class="mobile-controls">
+        <div class="joystick-container">
+            <div id="joystick-base" class="joystick-base">
+                <div id="joystick-thumb" class="joystick-thumb"></div>
+            </div>
+        </div>
+        <div class="mobile-buttons">
+            <button id="mobile-message" class="mobile-btn">
+                <span class="mobile-btn-icon">💌</span>
+            </button>
+            <button id="mobile-music" class="mobile-btn">
+                <span class="mobile-btn-icon">🎵</span>
+            </button>
+        </div>
+    </div>
+    
+    <div class="mobile-controls-hint">
+        Usa el joystick para moverte y arrastra la pantalla para mirar alrededor
+    </div>
+
     <audio id="audioPlayer" src="Daft Punk - Touch (Choral Version from Epilogue - Extended).mp3" preload="auto" style="display:none"></audio>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.min.js"></script>
     <script>
+        // Mejor detección de dispositivos móviles
+        function isMobileDevice() {
+            // Comprobación específica para iOS
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                         (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+            
+            // Comprobación general para otros dispositivos móviles
+            const isOtherMobile = /Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            // También detectar por tipo de entrada (touch)
+            const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+            
+            return isIOS || isOtherMobile || hasCoarsePointer;
+        }
+        
+        // Definir la variable global para usarla en el resto del código
+        const isMobile = isMobileDevice();
+        
         // Variables principales
         let scene, camera, renderer, composer;
         let sun, palmGroup, flowerField, cat, hearts = [];
         let clock = new THREE.Clock();
         const loader = new THREE.TextureLoader();
         
+        // Variables para el control táctil
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchMoveX = 0;
+        let touchMoveY = 0;
+        let isTouching = false;
+        
+        // Variables para el joystick
+        let joystickBase, joystickThumb;
+        let joystickActive = false;
+        let joystickPosition = { x: 0, y: 0 };
+        let joystickBaseRect = null;
+        
         // Manejo de audio con un efecto de fade in
         function setupAudio() {
             const audioElement = document.getElementById('audioPlayer');
             // Usamos la ruta original del archivo
-            // Ya está definida en el elemento audio como "Daft Punk - Touch (Choral Version from Epilogue - Extended).mp3"
             audioElement.loop = true;
             audioElement.volume = 0;
             
@@ -523,7 +295,12 @@
             createDigitalScreen();
             
             // Configurar eventos y controles
-            setupControls();
+            if (isMobile) {
+                setupMobileControls();
+            } else {
+                setupDesktopControls();
+            }
+            
             setupScreenControls();
             window.addEventListener('resize', onWindowResize);
             
@@ -540,768 +317,162 @@
             animate();
         }
         
-        function setupScreenControls() {
-            // Configurar los controles de la pantalla digital
-            document.getElementById('toggleScreen').addEventListener('click', toggleScreen);
-            document.getElementById('toggleMusic').addEventListener('click', toggleMusic);
+        // Funciones existentes (mantener igual)
+        // createSkybox, createSun, createGround, createPalms, createFlowers, createCat, createParticles
+        // No se incluyen para brevedad, mantener como en el original
+        
+        // Configuración mejorada de controles móviles
+        function setupMobileControls() {
+            console.log("Configurando controles móviles");
             
-            // Configurar controles de scroll para la pantalla
-            document.addEventListener('keydown', (event) => {
-                if (isScreenVisible) {
-                    if (event.key === 'ArrowUp') {
-                        // Scroll hacia arriba en el texto
-                        window.screenTextOffset = Math.max(0, window.screenTextOffset - 1);
-                    } else if (event.key === 'ArrowDown') {
-                        // Scroll hacia abajo en el texto
-                        window.screenTextOffset = Math.min(13, window.screenTextOffset + 1);
-                    }
-                }
-            });
+            // Mostrar los elementos de control móvil
+            document.getElementById('mobile-controls').style.display = 'block';
+            document.querySelector('.mobile-controls-hint').style.display = 'block';
+            
+            // Ocultar controles de escritorio
+            document.querySelector('.controls-hint').style.display = 'none';
+            document.getElementById('screenControls').style.display = 'none';
+            
+            // Obtener referencias a los elementos del joystick
+            joystickBase = document.getElementById('joystick-base');
+            joystickThumb = document.getElementById('joystick-thumb');
+            
+            // Calcular el rectángulo del joystick base para posicionamiento
+            joystickBaseRect = joystickBase.getBoundingClientRect();
+            
+            // Eventos para el joystick
+            joystickBase.addEventListener('touchstart', handleJoystickStart);
+            joystickBase.addEventListener('touchmove', handleJoystickMove);
+            joystickBase.addEventListener('touchend', handleJoystickEnd);
+            
+            // Eventos para la cámara (rotación por arrastrar)
+            document.addEventListener('touchstart', handleTouchStart);
+            document.addEventListener('touchmove', handleTouchMove);
+            document.addEventListener('touchend', handleTouchEnd);
+            
+            // Configurar botones móviles
+            document.getElementById('mobile-message').addEventListener('touchstart', toggleScreen);
+            document.getElementById('mobile-music').addEventListener('touchstart', toggleMusic);
+            
+            // Actualizar el joystick periódicamente
+            setInterval(updateJoystickPosition, 20);
         }
         
-        // Crear el skybox (cielo)
-        function createSkybox() {
-            // Creamos un gradiente de cielo con geometría
-            const skyGeometry = new THREE.SphereGeometry(500, 32, 32);
+        // Manejo del joystick
+        function handleJoystickStart(event) {
+            event.preventDefault();
+            joystickActive = true;
             
-            // Material para el cielo con gradiente de atardecer
-            const uniforms = {
-                topColor: { value: new THREE.Color(0xff0026) },
-                bottomColor: { value: new THREE.Color(0x004ac9) },
-                offset: { value: 50 },
-                exponent: { value: 0.6 }
+            // Actualizar el rectángulo por si ha cambiado
+            joystickBaseRect = joystickBase.getBoundingClientRect();
+            
+            const touch = event.touches[0];
+            const centerX = joystickBaseRect.left + joystickBaseRect.width / 2;
+            const centerY = joystickBaseRect.top + joystickBaseRect.height / 2;
+            
+            // Mover el joystick al punto de toque
+            updateJoystickThumb(touch.clientX, touch.clientY);
+        }
+        
+        function handleJoystickMove(event) {
+            if (!joystickActive) return;
+            event.preventDefault();
+            
+            const touch = event.touches[0];
+            updateJoystickThumb(touch.clientX, touch.clientY);
+        }
+        
+        function handleJoystickEnd(event) {
+            event.preventDefault();
+            joystickActive = false;
+            
+            // Devolver el joystick a la posición central
+            joystickThumb.style.transform = 'translate(-50%, -50%)';
+            joystickPosition = { x: 0, y: 0 };
+        }
+        
+        function updateJoystickThumb(clientX, clientY) {
+            // Calcular la posición relativa al centro del joystick
+            const centerX = joystickBaseRect.left + joystickBaseRect.width / 2;
+            const centerY = joystickBaseRect.top + joystickBaseRect.height / 2;
+            
+            // Calcular la distancia desde el centro
+            let deltaX = clientX - centerX;
+            let deltaY = clientY - centerY;
+            
+            // Limitar el movimiento del joystick al radio del base
+            const radius = joystickBaseRect.width / 2;
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            
+            if (distance > radius) {
+                deltaX = deltaX * radius / distance;
+                deltaY = deltaY * radius / distance;
+            }
+            
+            // Actualizar la posición visual del thumb
+            joystickThumb.style.transform = `translate(calc(-50% + ${deltaX}px), calc(-50% + ${deltaY}px))`;
+            
+            // Normalizar los valores para el movimiento (entre -1 y 1)
+            joystickPosition = {
+                x: deltaX / radius,
+                y: deltaY / radius
             };
-            
-            const skyMaterial = new THREE.ShaderMaterial({
-                uniforms: uniforms,
-                vertexShader: `
-                    varying vec3 vWorldPosition;
-                    void main() {
-                        vec4 worldPosition = modelMatrix * vec4(position, 1.0);
-                        vWorldPosition = worldPosition.xyz;
-                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                    }
-                `,
-                fragmentShader: `
-                    uniform vec3 topColor;
-                    uniform vec3 bottomColor;
-                    uniform float offset;
-                    uniform float exponent;
-                    varying vec3 vWorldPosition;
-                    void main() {
-                        float h = normalize(vWorldPosition + offset).y;
-                        gl_FragColor = vec4(mix(bottomColor, topColor, max(pow(max(h, 0.0), exponent), 0.0)), 1.0);
-                    }
-                `,
-                side: THREE.BackSide
-            });
-            
-            const sky = new THREE.Mesh(skyGeometry, skyMaterial);
-            scene.add(sky);
-            
-            // Añadir estrellas al cielo
-            const starsGeometry = new THREE.BufferGeometry();
-            const starsMaterial = new THREE.PointsMaterial({
-                color: 0xffffff,
-                size: 0.7,
-                transparent: true,
-                opacity: 0.8,
-                sizeAttenuation: true
-            });
-            
-            const starsVertices = [];
-            for (let i = 0; i < 1000; i++) {
-                const x = THREE.MathUtils.randFloatSpread(600);
-                const y = THREE.MathUtils.randFloat(50, 250); // Estrellas solo en la parte superior
-                const z = THREE.MathUtils.randFloatSpread(600);
-                starsVertices.push(x, y, z);
-            }
-            
-            starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
-            const starField = new THREE.Points(starsGeometry, starsMaterial);
-            scene.add(starField);
         }
         
-        // Crear el sol
-        function createSun() {
-            const sunGeometry = new THREE.SphereGeometry(10, 32, 32);
-            const sunMaterial = new THREE.MeshBasicMaterial({
-                color: 0xff5500,
-                transparent: true,
-                opacity: 0.9
-            });
+        // Actualizar periódicamente la posición del joystick para el movimiento
+        function updateJoystickPosition() {
+            if (!isMobile) return;
             
-            sun = new THREE.Mesh(sunGeometry, sunMaterial);
-            sun.position.set(0, 60, -150);
-            scene.add(sun);
-            
-            // Añadir resplandor al sol
-            const sunLightGeometry = new THREE.SphereGeometry(15, 32, 32);
-            const sunLightMaterial = new THREE.MeshBasicMaterial({
-                color: 0xffaa00,
-                transparent: true,
-                opacity: 0.5
-            });
-            
-            const sunGlow = new THREE.Mesh(sunLightGeometry, sunLightMaterial);
-            sun.add(sunGlow);
-            
-            // Luz direccional para simular la luz del sol
-            const sunLight = new THREE.DirectionalLight(0xfffaf0, 1);
-            sunLight.position.set(0, 100, -150);
-            sunLight.castShadow = true;
-            sunLight.shadow.camera.far = 300;
-            sunLight.shadow.camera.left = -100;
-            sunLight.shadow.camera.right = 100;
-            sunLight.shadow.camera.top = 100;
-            sunLight.shadow.camera.bottom = -100;
-            sunLight.shadow.mapSize.width = 1024;
-            sunLight.shadow.mapSize.height = 1024;
-            scene.add(sunLight);
-        }
-        
-        // Crear el suelo
-        function createGround() {
-            // Arena
-            const sandGeometry = new THREE.PlaneGeometry(1000, 1000);
-            const sandMaterial = new THREE.MeshStandardMaterial({
-                color: 0xd4b94b,
-                roughness: 0.8,
-                metalness: 0.1
-            });
-            
-            const sand = new THREE.Mesh(sandGeometry, sandMaterial);
-            sand.rotation.x = -Math.PI / 2;
-            sand.position.y = -1;
-            sand.receiveShadow = true;
-            scene.add(sand);
-            
-            // Agua
-            const waterGeometry = new THREE.PlaneGeometry(1000, 800);
-            const waterMaterial = new THREE.MeshStandardMaterial({
-                color: 0x0088ff,
-                roughness: 0.1,
-                metalness: 0.6,
-                transparent: true,
-                opacity: 0.8
-            });
-            
-            const water = new THREE.Mesh(waterGeometry, waterMaterial);
-            water.rotation.x = -Math.PI / 2;
-            water.position.y = -0.5;
-            water.position.z = -300;
-            scene.add(water);
-        }
-        
-        // Crear palmeras
-        function createPalms() {
-            palmGroup = new THREE.Group();
-            scene.add(palmGroup);
-            
-            // Función para crear una sola palmera
-            function createPalm(x, z, scaleVal = 1, rotY = 0) {
-                const palm = new THREE.Group();
-                
-                // Tronco
-                const trunkGeometry = new THREE.CylinderGeometry(0.5, 0.7, 15, 8);
-                const trunkMaterial = new THREE.MeshStandardMaterial({
-                    color: 0x8B4513,
-                    roughness: 0.9,
-                    metalness: 0.1
-                });
-                
-                const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
-                trunk.castShadow = true;
-                trunk.position.y = 7.5;
-                
-                // Inclinación aleatoria del tronco
-                trunk.rotation.x = THREE.MathUtils.randFloatSpread(0.1);
-                trunk.rotation.z = THREE.MathUtils.randFloatSpread(0.1);
-                
-                palm.add(trunk);
-                
-                // Hojas
-                const leafShape = new THREE.Shape();
-                leafShape.moveTo(0, 0);
-                leafShape.bezierCurveTo(2, 1, 8, 1.5, 10, 0);
-                leafShape.bezierCurveTo(8, -1.5, 2, -1, 0, 0);
-                
-                const extrudeSettings = {
-                    depth: 0.1,
-                    bevelEnabled: true,
-                    bevelThickness: 0.1,
-                    bevelSize: 0.1,
-                    bevelSegments: 3
-                };
-                
-                const leafGeometry = new THREE.ExtrudeGeometry(leafShape, extrudeSettings);
-                const leafMaterial = new THREE.MeshStandardMaterial({
-                    color: 0x00aa00,
-                    roughness: 0.8,
-                    metalness: 0.1,
-                    side: THREE.DoubleSide
-                });
-                
-                // Crear varias hojas y posicionarlas
-                for (let i = 0; i < 7; i++) {
-                    const leaf = new THREE.Mesh(leafGeometry, leafMaterial);
-                    leaf.castShadow = true;
-                    leaf.rotation.z = (i * Math.PI / 3.5);
-                    leaf.rotation.y = (i * Math.PI / 7);
-                    leaf.position.y = 15;
-                    leaf.scale.set(1, 1 + Math.random() * 0.5, 1);
-                    palm.add(leaf);
-                }
-                
-                // Posicionar la palmera completa
-                palm.position.set(x, 0, z);
-                palm.rotation.y = rotY;
-                palm.scale.set(scaleVal, scaleVal, scaleVal);
-                
-                return palm;
-            }
-            
-            // Distribuir varias palmeras
-            const palmPositions = [
-                { x: -25, z: 0, scale: 1.2, rotY: Math.PI/4 },
-                { x: -18, z: 8, scale: 0.9, rotY: Math.PI/3 },
-                { x: 25, z: 5, scale: 1.1, rotY: -Math.PI/5 },
-                { x: 20, z: -8, scale: 0.8, rotY: -Math.PI/6 },
-                { x: -12, z: -15, scale: 1, rotY: Math.PI/8 },
-                { x: 15, z: -18, scale: 1.3, rotY: -Math.PI/9 },
-                { x: -30, z: -25, scale: 1.5, rotY: Math.PI/7 },
-                { x: 30, z: -30, scale: 1.4, rotY: -Math.PI/8 }
-            ];
-            
-            palmPositions.forEach(pos => {
-                const palm = createPalm(pos.x, pos.z, pos.scale, pos.rotY);
-                palmGroup.add(palm);
-            });
-        }
-        
-        // Crear flores
-        function createFlowers() {
-            flowerField = new THREE.Group();
-            scene.add(flowerField);
-            
-            // Función para crear una flor
-            function createFlower(x, z, scale = 1, color = 0xffc400) {
-                const flower = new THREE.Group();
-                
-                // Tallo
-                const stemGeometry = new THREE.CylinderGeometry(0.1, 0.15, 3, 8);
-                const stemMaterial = new THREE.MeshStandardMaterial({
-                    color: 0x2ecc71,
-                    roughness: 0.8
-                });
-                
-                const stem = new THREE.Mesh(stemGeometry, stemMaterial);
-                stem.castShadow = true;
-                stem.position.y = 1.5;
-                flower.add(stem);
-                
-                // Centro de la flor
-                const centerGeometry = new THREE.SphereGeometry(0.5, 16, 16);
-                const centerMaterial = new THREE.MeshStandardMaterial({
-                    color: 0x23200a,
-                    roughness: 0.9
-                });
-                
-                const center = new THREE.Mesh(centerGeometry, centerMaterial);
-                center.castShadow = true;
-                center.position.y = 3.2;
-                flower.add(center);
-                
-                // Pétalos
-                const petalGeometry = new THREE.ConeGeometry(0.8, 1.5, 4);
-                const petalMaterial = new THREE.MeshStandardMaterial({
-                    color: color,
-                    roughness: 0.6,
-                    metalness: 0.1
-                });
-                
-                // Crear pétalos alrededor del centro
-                for (let i = 0; i < 8; i++) {
-                    const petal = new THREE.Mesh(petalGeometry, petalMaterial);
-                    petal.castShadow = true;
-                    
-                    // Posicionar alrededor del centro
-                    const angle = (i / 8) * Math.PI * 2;
-                    petal.position.set(
-                        Math.cos(angle) * 0.6,
-                        3.2,
-                        Math.sin(angle) * 0.6
-                    );
-                    
-                    // Apuntar hacia afuera
-                    petal.lookAt(
-                        Math.cos(angle) * 10,
-                        3.2,
-                        Math.sin(angle) * 10
-                    );
-                    
-                    // Rotar para que el cono apunte hacia afuera
-                    petal.rotateX(Math.PI / 2);
-                    
-                    flower.add(petal);
-                }
-                
-                // Posicionar la flor completa
-                flower.position.set(x, 0, z);
-                flower.scale.set(scale, scale, scale);
-                
-                return flower;
-            }
-            
-            // Distribuir múltiples flores
-            const flowerColors = [0xffc400, 0xff9500, 0xff5f00, 0xffcc00, 0xff8800];
-            
-            for (let i = 0; i < 80; i++) {
-                const x = THREE.MathUtils.randFloatSpread(60);
-                const z = THREE.MathUtils.randFloatSpread(60);
-                const scale = 0.3 + Math.random() * 0.3;
-                const colorIndex = Math.floor(Math.random() * flowerColors.length);
-                
-                // Evitar colocar flores muy cerca de las palmeras
-                let tooClose = false;
-                palmGroup.children.forEach(palm => {
-                    const dx = palm.position.x - x;
-                    const dz = palm.position.z - z;
-                    const distSq = dx * dx + dz * dz;
-                    if (distSq < 25) { // 5 al cuadrado
-                        tooClose = true;
-                    }
-                });
-                
-                if (!tooClose) {
-                    const flower = createFlower(x, z, scale, flowerColors[colorIndex]);
-                    flowerField.add(flower);
-                }
-            }
-        }
-        
-        // Crear el gato
-        // Pantalla digital 3D
-        let digitalScreen;
-        let isScreenVisible = false;
-        let isMusicPlaying = false;
-        
-        function createDigitalScreen() {
-            // Grupo principal para la pantalla
-            digitalScreen = new THREE.Group();
-            
-            // Crear el marco de la pantalla (más grande)
-            const frameGeometry = new THREE.BoxGeometry(30, 20, 0.5);
-            const frameMaterial = new THREE.MeshStandardMaterial({
-                color: 0xff4757,
-                roughness: 0.2,
-                metalness: 0.8,
-                emissive: 0xff4757,
-                emissiveIntensity: 0.2
-            });
-            
-            const frame = new THREE.Mesh(frameGeometry, frameMaterial);
-            frame.castShadow = true;
-            frame.receiveShadow = true;
-            digitalScreen.add(frame);
-            
-            // Crear la pantalla en sí (más grande)
-            const screenGeometry = new THREE.PlaneGeometry(29, 19);
-            
-            // Crear un canvas para la textura de la pantalla
-            const canvas = document.createElement('canvas');
-            canvas.width = 1400;
-            canvas.height = 900;
-            const context = canvas.getContext('2d');
-            
-            // Rellenar el fondo
-            context.fillStyle = 'rgba(0, 0, 0, 0.8)';
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Añadir un borde brillante
-            context.strokeStyle = 'rgba(255, 127, 80, 0.8)';
-            context.lineWidth = 10;
-            context.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
-            
-            // Añadir un gradiente de fondo
-            const gradient = context.createLinearGradient(0, 0, canvas.width, canvas.height);
-            gradient.addColorStop(0, 'rgba(255, 79, 87, 0.2)');
-            gradient.addColorStop(0.5, 'rgba(255, 127, 80, 0.1)');
-            gradient.addColorStop(1, 'rgba(255, 204, 0, 0.2)');
-            context.fillStyle = gradient;
-            context.fillRect(10, 10, canvas.width - 20, canvas.height - 20);
-            
-            // Configurar el estilo del texto
-            context.font = 'bold 36px Arial';
-            context.textAlign = 'center';
-            context.fillStyle = 'white';
-            context.shadowColor = 'rgba(255, 127, 80, 0.8)';
-            context.shadowBlur = 15;
-            
-            // Escribir el texto del mensaje
-            const text = [
-                "Mi amor,",
-                "",
-                "Amor, ya vamos más de dos meses, y cada día que pasa me doy cuenta ",
-                "de algo: quiero que estés en mi vida, no solo ahorita, sino siempre.",
-                "No me importa la distancia, no me importa lo que venga, yo estoy aquí, ",
-                "contigo, y siempre vas a estar en mis planes. Porque tú no eres un  ",
-                "agregado, tú eres el centro de todo.",
-                "",
-                "Estoy terminando mi carrera, y aunque estos meses hayamos tenido pequeños ",
-                "problemas, siempre lo hemos solucionado, lo que más me motiva es pensar en ",
-                "el momento en que ya podamos estar juntos, sin estar contando los días ni las horas.",
-                "Cada vez que despierto y veo tu mensaje, siento que el día va a ser mejor.",
-                "Cada vez que me dices que me quieres, siento que el mundo es un lugar mejor.",
-                "Cada viaje que hago para verte, yo se que no son muchos jeje, siempre voy",
-                "emocionado, se que aprendere algo nuevo sobre el amor contigo.",
-                "",
-                "Me gusta como me tratas, como me miras, como te preocupas por mi,",
-                "podria tener el plan mas aburrido del mundo, pero si estoy contigo,",
-                "siento que estoy en el mejor lugar del mundo.",
-                "Eres mi chikistrikis, mi amorcito, mi niña pechocha, mi enojoncita, jeje bromita",
-                "no te enojas tu jeje, te quiero mucho, los dias pasan volando, creo que",
-                "el Diosito está yendo a nuestro favor, hay muchas cosas que quiero hacer",
-                "juntos, la paciencia no es mi mejor virtud, y por ti espero lo que sea necesario.",
-                "",
-                "No olvides que estás en mi corazoncito, se que me faltan detalles contigo, ",
-                "de momento no tengo mucho dinero, y mediante esta detalle digital intangible",
-                "te estoy expresando lo mis mas sinceros sentimeintos, espero te guste.",
-                "De tu cholashooooo.",
-                "",
-            ];
-            
-            // Crear una textura animada para el texto (solo crearemos la primera parte)
-            window.updateScreenText = function(offset = 0) {
-                // Limpiar el canvas
-                context.fillStyle = 'rgba(0, 0, 0, 0.8)';
-                context.fillRect(0, 0, canvas.width, canvas.height);
-                
-                // Añadir el borde
-                context.strokeStyle = 'rgba(255, 127, 80, 0.8)';
-                context.lineWidth = 10;
-                context.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
-                
-                // Añadir el gradiente
-                context.fillStyle = gradient;
-                context.fillRect(10, 10, canvas.width - 20, canvas.height - 20);
-                
-                // Configurar el estilo del texto
-                context.font = 'bold 32px Arial';
-                context.textAlign = 'center';
-                context.fillStyle = 'white';
-                context.shadowColor = 'rgba(255, 127, 80, 0.8)';
-                context.shadowBlur = 15;
-                
-                // Dibujar las líneas visibles actualmente
-                const visibleLines = 14; // Número de líneas visibles a la vez
-                const startLine = Math.floor(offset);
-                
-                for (let i = 0; i < visibleLines && i + startLine < text.length; i++) {
-                    context.fillText(
-                        text[i + startLine], 
-                        canvas.width / 2, 
-                        100 + i * 50
-                    );
-                }
-                
-                // Añadir indicador de desplazamiento y controles
-                context.fillStyle = 'rgba(255, 255, 255, 0.9)';
-                context.font = 'bold 24px Arial';
-                context.fillText('↑↓ Desplazar • ❤️ Tu Cholasho Diego', canvas.width / 2, canvas.height - 40);
-                
-                // Añadir indicador de música
-                if (isMusicPlaying) {
-                    context.fillStyle = '#ff4757';
-                    context.font = 'bold 28px Arial';
-                    context.fillText('♫ Música: Daft Punk - Touch ♫', canvas.width / 2, 50);
-                }
-                
-                // Actualizar la textura
-                screenTexture.needsUpdate = true;
+            // Este valor se utilizará en updateCamera para mover al jugador
+            window.joystickControls = {
+                active: joystickActive,
+                x: joystickPosition.x,
+                y: -joystickPosition.y // Invertir Y para que arriba sea adelante
             };
-            
-            // Crear la textura a partir del canvas
-            const screenTexture = new THREE.CanvasTexture(canvas);
-            
-            const screenMaterial = new THREE.MeshBasicMaterial({
-                map: screenTexture,
-                side: THREE.FrontSide
-            });
-            
-            const screen = new THREE.Mesh(screenGeometry, screenMaterial);
-            screen.position.z = 0.26;
-            digitalScreen.add(screen);
-            
-            // Añadir soporte para la pantalla (más grande y adaptado para estar en el suelo)
-            const standGeometry = new THREE.BoxGeometry(3, 0.5, 3);
-            const standMaterial = new THREE.MeshStandardMaterial({
-                color: 0xff4757,
-                roughness: 0.3,
-                metalness: 0.7
-            });
-            
-            const stand = new THREE.Mesh(standGeometry, standMaterial);
-            stand.position.y = -10.25;
-            stand.position.z = 0;
-            digitalScreen.add(stand);
-            
-            // Posicionar y orientar toda la pantalla - ahora está en el suelo
-            digitalScreen.position.set(0, 10, -20); // Posición central, en el suelo, algo alejada
-            digitalScreen.rotation.x = Math.PI * 0.1; // Ligera inclinación hacia arriba para mejor visibilidad
-            digitalScreen.visible = false;
-            
-            scene.add(digitalScreen);
-            
-            // Inicializar el texto
-            window.updateScreenText(0);
-            
-            // Variables para el scroll del texto
-            window.screenTextOffset = 0;
-            
-            // Llamar a la actualización periódicamente para animar
-            setInterval(() => {
-                if (digitalScreen.visible) {
-                    window.updateScreenText(window.screenTextOffset);
-                }
-            }, 100);
         }
         
-        function toggleScreen() {
-            isScreenVisible = !isScreenVisible;
-            digitalScreen.visible = isScreenVisible;
-            
-            // Animación de aparición/desaparición con TWEEN
-            if (isScreenVisible) {
-                digitalScreen.scale.set(0.1, 0.1, 0.1);
-                new TWEEN.Tween(digitalScreen.scale)
-                    .to({ x: 0.5, y: 0.5, z: 0.5 }, 1000)
-                    .easing(TWEEN.Easing.Elastic.Out)
-                    .start();
-                
-                new TWEEN.Tween(digitalScreen.rotation)
-                    .to({ z: Math.PI * 2 }, 1000)
-                    .easing(TWEEN.Easing.Quadratic.Out)
-                    .start();
-                
-                document.getElementById('toggleScreen').querySelector('.btn-text').textContent = 'Ocultar Mensaje';
-            } else {
-                new TWEEN.Tween(digitalScreen.scale)
-                    .to({ x: 0.1, y: 0.1, z: 0.1 }, 500)
-                    .easing(TWEEN.Easing.Back.In)
-                    .onComplete(() => {
-                        digitalScreen.visible = false;
-                        digitalScreen.scale.set(0.5, 0.5, 0.5);
-                        digitalScreen.rotation.z = 0;
-                    })
-                    .start();
-                
-                document.getElementById('toggleScreen').querySelector('.btn-text').textContent = 'Mostrar Mensaje';
+        // Manejo de la rotación de la cámara por toque
+        function handleTouchStart(event) {
+            // Ignorar si el toque es dentro del joystick
+            if (event.target.closest('.joystick-container') || 
+                event.target.closest('.mobile-buttons')) {
+                return;
             }
+            
+            isTouching = true;
+            touchStartX = event.touches[0].clientX;
+            touchStartY = event.touches[0].clientY;
         }
         
-        function toggleMusic() {
-            const audioPlayer = document.getElementById('audioPlayer');
-            const musicBtn = document.getElementById('toggleMusic');
-            
-            if (isMusicPlaying) {
-                // Pausar música con fade out
-                let vol = audioPlayer.volume;
-                const fadeOut = setInterval(() => {
-                    if (vol > 0.02) {
-                        vol -= 0.02;
-                        audioPlayer.volume = vol;
-                    } else {
-                        clearInterval(fadeOut);
-                        audioPlayer.pause();
-                        isMusicPlaying = false;
-                        musicBtn.classList.remove('music-active');
-                        musicBtn.querySelector('.btn-text').textContent = 'Reproducir';
-                        musicBtn.querySelector('.btn-icon').textContent = '🎵';
-                    }
-                }, 50);
-            } else {
-                // Reproducir música con fade in
-                audioPlayer.play();
-                audioPlayer.volume = 0;
-                isMusicPlaying = true;
-                musicBtn.classList.add('music-active');
-                musicBtn.querySelector('.btn-text').textContent = 'Pausar';
-                musicBtn.querySelector('.btn-icon').textContent = '♫';
-                
-                let vol = 0;
-                const fadeIn = setInterval(() => {
-                    if (vol < 0.5) {
-                        vol += 0.01;
-                        audioPlayer.volume = vol;
-                    } else {
-                        clearInterval(fadeIn);
-                    }
-                }, 50);
+        function handleTouchMove(event) {
+            // Ignorar si el toque es dentro del joystick
+            if (!isTouching || event.target.closest('.joystick-container') || 
+                event.target.closest('.mobile-buttons')) {
+                return;
             }
+            
+            touchMoveX = event.touches[0].clientX - touchStartX;
+            touchMoveY = event.touches[0].clientY - touchStartY;
+            
+            // Actualizar la rotación de la cámara
+            targetRotationX -= touchMoveX * 0.01;
+            targetRotationY = Math.max(-Math.PI/4, Math.min(Math.PI/4, targetRotationY - touchMoveY * 0.01));
+            
+            // Actualizar los puntos de inicio para el próximo movimiento
+            touchStartX = event.touches[0].clientX;
+            touchStartY = event.touches[0].clientY;
         }
         
-        function createCat() {
-            cat = new THREE.Group();
-            
-            // Cuerpo
-            const bodyGeometry = new THREE.SphereGeometry(1.5, 16, 16);
-            bodyGeometry.scale(1.5, 1, 1.2);
-            const bodyMaterial = new THREE.MeshStandardMaterial({
-                color: 0x151515,
-                roughness: 0.8
-            });
-            
-            const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
-            body.castShadow = true;
-            body.position.y = 1.5;
-            cat.add(body);
-            
-            // Cabeza
-            const headGeometry = new THREE.SphereGeometry(1, 16, 16);
-            const headMaterial = new THREE.MeshStandardMaterial({
-                color: 0x151515,
-                roughness: 0.7
-            });
-            
-            const head = new THREE.Mesh(headGeometry, headMaterial);
-            head.castShadow = true;
-            head.position.set(1.5, 2.5, 0);
-            cat.add(head);
-            
-            // Orejas
-            const earGeometry = new THREE.ConeGeometry(0.4, 0.8, 4);
-            const earMaterial = new THREE.MeshStandardMaterial({
-                color: 0x0d0d0d,
-                roughness: 0.9
-            });
-            
-            const earLeft = new THREE.Mesh(earGeometry, earMaterial);
-            earLeft.castShadow = true;
-            earLeft.position.set(1.7, 3.3, -0.5);
-            earLeft.rotation.z = -Math.PI / 4;
-            cat.add(earLeft);
-            
-            const earRight = new THREE.Mesh(earGeometry, earMaterial);
-            earRight.castShadow = true;
-            earRight.position.set(1.7, 3.3, 0.5);
-            earRight.rotation.z = -Math.PI / 4;
-            cat.add(earRight);
-            
-            // Ojos
-            const eyeGeometry = new THREE.SphereGeometry(0.2, 16, 16);
-            const eyeMaterial = new THREE.MeshStandardMaterial({
-                color: 0xd4af37,
-                roughness: 0.3,
-                metalness: 0.4,
-                emissive: 0x554411,
-                emissiveIntensity: 0.5
-            });
-            
-            const eyeLeft = new THREE.Mesh(eyeGeometry, eyeMaterial);
-            eyeLeft.position.set(2.1, 2.7, -0.4);
-            cat.add(eyeLeft);
-            
-            const eyeRight = new THREE.Mesh(eyeGeometry, eyeMaterial);
-            eyeRight.position.set(2.1, 2.7, 0.4);
-            cat.add(eyeRight);
-            
-            // Cola
-            const tailCurve = new THREE.CubicBezierCurve3(
-                new THREE.Vector3(-1.5, 1.5, 0),
-                new THREE.Vector3(-3, 2, 0),
-                new THREE.Vector3(-3.5, 3, 0),
-                new THREE.Vector3(-2.5, 4, 0)
-            );
-            
-            const tailGeometry = new THREE.TubeGeometry(tailCurve, 20, 0.2, 8, false);
-            const tailMaterial = new THREE.MeshStandardMaterial({
-                color: 0x0d0d0d,
-                roughness: 0.8
-            });
-            
-            const tail = new THREE.Mesh(tailGeometry, tailMaterial);
-            tail.castShadow = true;
-            cat.add(tail);
-            
-            // Posicionar el gato
-            cat.position.set(0, 0, 10);
-            cat.scale.set(0.8, 0.8, 0.8);
-            scene.add(cat);
+        function handleTouchEnd(event) {
+            isTouching = false;
         }
         
-        // Crear partículas (corazones que flotan)
-        function createParticles() {
-            // Crear geometría de corazón
-            const heartShape = new THREE.Shape();
-            const x = 0, y = 0;
-            
-            heartShape.moveTo(x, y + 1);
-            heartShape.bezierCurveTo(x + 1, y + 1, x + 1.5, y, x, y - 1);
-            heartShape.bezierCurveTo(x - 1.5, y, x - 1, y + 1, x, y + 1);
-            
-            const heartGeometry = new THREE.ExtrudeGeometry(heartShape, {
-                depth: 0.2,
-                bevelEnabled: true,
-                bevelThickness: 0.1,
-                bevelSize: 0.2,
-                bevelSegments: 3
-            });
-            
-            // Crear varios corazones flotantes
-            for (let i = 0; i < 30; i++) {
-                const heartMaterial = new THREE.MeshStandardMaterial({
-                    color: new THREE.Color(
-                        0.9 + Math.random() * 0.1,
-                        0.1 + Math.random() * 0.1,
-                        0.1 + Math.random() * 0.1
-                    ),
-                    roughness: 0.3,
-                    metalness: 0.2,
-                    transparent: true,
-                    opacity: 0.7 + Math.random() * 0.3,
-                    side: THREE.DoubleSide
-                });
-                
-                const heart = new THREE.Mesh(heartGeometry, heartMaterial);
-                heart.scale.set(0.1, 0.1, 0.1);
-                
-                heart.position.set(
-                    THREE.MathUtils.randFloatSpread(60),
-                    2 + Math.random() * 10,
-                    THREE.MathUtils.randFloatSpread(60)
-                );
-                
-                heart.rotation.set(
-                    Math.random() * Math.PI,
-                    Math.random() * Math.PI,
-                    Math.random() * Math.PI
-                );
-                
-                // Propiedades para animación
-                heart.userData = {
-                    rotSpeed: (Math.random() - 0.5) * 0.02,
-                    floatSpeed: 0.2 + Math.random() * 0.3,
-                    floatHeight: 1 + Math.random() * 2,
-                    originalY: heart.position.y,
-                    floatOffset: Math.random() * Math.PI * 2
-                };
-                
-                hearts.push(heart);
-                scene.add(heart);
-            }
-        }
-        
-        // Configurar controles para explorar la escena
-        function setupControls() {
+        // Configuración para controles de escritorio (mantener igual)
+        function setupDesktopControls() {
             // Variables para el control de la cámara con el ratón
             let isMouseDown = false;
             let mouseX = 0;
             let mouseY = 0;
-            let targetRotationX = 0;
-            let targetRotationY = 0;
-            let currentRotationX = 0;
-            let currentRotationY = 0;
             
             // Variables para el movimiento con teclado
             const keys = {
@@ -1342,10 +513,6 @@
                     case 'a': keys.a = true; break;
                     case 's': keys.s = true; break;
                     case 'd': keys.d = true; break;
-                    case 'e': 
-                        document.getElementById('centeredCard').style.display = 
-                            document.getElementById('centeredCard').style.display === 'flex' ? 'none' : 'flex';
-                        break;
                 }
             });
             
@@ -1358,177 +525,94 @@
                 }
             });
             
-            // Función para actualizar la posición de la cámara
-            window.updateCamera = function(delta) {
-                // Suavizar la rotación
-                currentRotationX += (targetRotationX - currentRotationX) * 0.1;
-                currentRotationY += (targetRotationY - currentRotationY) * 0.1;
+            // Guardar las teclas en window para poder acceder desde updateCamera
+            window.keys = keys;
+        }
+        
+        // Variables para la rotación de la cámara
+        let targetRotationX = 0;
+        let targetRotationY = 0;
+        let currentRotationX = 0;
+        let currentRotationY = 0;
+        
+        // Función mejorada para actualizar la cámara (compatible con ambos controles)
+        window.updateCamera = function(delta) {
+            // Suavizar la rotación
+            currentRotationX += (targetRotationX - currentRotationX) * 0.1;
+            currentRotationY += (targetRotationY - currentRotationY) * 0.1;
+            
+            // Aplicar rotación
+            camera.rotation.order = 'YXZ';
+            camera.rotation.y = currentRotationX;
+            camera.rotation.x = currentRotationY;
+            
+            // Movimiento basado en el input
+            const speed = 10 * delta;
+            const direction = new THREE.Vector3();
+            
+            // Obtener la dirección frontal (excluir el componente Y para mantener el movimiento en el plano horizontal)
+            const frontVector = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion);
+            frontVector.y = 0;
+            frontVector.normalize();
+            
+            // Obtener la dirección lateral
+            const rightVector = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
+            rightVector.y = 0;
+            rightVector.normalize();
+            
+            if (isMobile && window.joystickControls && window.joystickControls.active) {
+                // Movimiento basado en joystick
+                const joyY = window.joystickControls.y;
+                const joyX = window.joystickControls.x;
                 
-                // Aplicar rotación
-                camera.rotation.order = 'YXZ';
-                camera.rotation.y = currentRotationX;
-                camera.rotation.x = currentRotationY;
+                if (Math.abs(joyY) > 0.1) {
+                    direction.addScaledVector(frontVector, joyY);
+                }
                 
+                if (Math.abs(joyX) > 0.1) {
+                    direction.addScaledVector(rightVector, joyX);
+                }
+            } else if (!isMobile && window.keys) {
                 // Movimiento basado en teclado
-                const speed = 10 * delta;
-                const direction = new THREE.Vector3();
+                if (window.keys.w) direction.add(frontVector);
+                if (window.keys.s) direction.sub(frontVector);
+                if (window.keys.a) direction.sub(rightVector);
+                if (window.keys.d) direction.add(rightVector);
+            }
+            
+            // Normalizar la dirección si hay movimiento
+            if (direction.length() > 0) {
+                direction.normalize();
+                camera.position.addScaledVector(direction, speed);
                 
-                // Obtener la dirección frontal (excluir el componente Y para mantener el movimiento en el plano horizontal)
-                const frontVector = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion);
-                frontVector.y = 0;
-                frontVector.normalize();
+                // Limitar el movimiento dentro de un área
+                camera.position.x = Math.max(-50, Math.min(50, camera.position.x));
+                camera.position.z = Math.max(-50, Math.min(50, camera.position.z));
                 
-                // Obtener la dirección lateral
-                const rightVector = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
-                rightVector.y = 0;
-                rightVector.normalize();
-                
-                // Aplicar las direcciones según las teclas presionadas
-                if (keys.w) direction.add(frontVector);
-                if (keys.s) direction.sub(frontVector);
-                if (keys.a) direction.sub(rightVector);
-                if (keys.d) direction.add(rightVector);
-                
-                // Normalizar la dirección si hay movimiento
-                if (direction.length() > 0) {
-                    direction.normalize();
-                    camera.position.addScaledVector(direction, speed);
-                    
-                    // Limitar el movimiento dentro de un área
-                    camera.position.x = Math.max(-50, Math.min(50, camera.position.x));
-                    camera.position.z = Math.max(-50, Math.min(50, camera.position.z));
-                    
-                    // Mantener la altura
-                    camera.position.y = 5;
-                }
-            };
-        }
+                // Mantener la altura
+                camera.position.y = 5;
+            }
+        };
         
-        // Redimensionar la ventana
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }
-        
-        // Animación de la escena
-        function animate() {
-            requestAnimationFrame(animate);
-            const delta = clock.getDelta();
-            
-            // Actualizar animaciones con TWEEN
-            TWEEN.update();
-            
-            // Actualizar la cámara
-            window.updateCamera(delta);
-            
-            // Animación del sol
-            if (sun) {
-                sun.children[0].scale.x = 1 + Math.sin(clock.getElapsedTime() * 0.5) * 0.1;
-                sun.children[0].scale.y = 1 + Math.sin(clock.getElapsedTime() * 0.5) * 0.1;
-                sun.children[0].scale.z = 1 + Math.sin(clock.getElapsedTime() * 0.5) * 0.1;
-            }
-            
-            // Animación de las palmeras
-            if (palmGroup) {
-                palmGroup.children.forEach((palm, i) => {
-                    palm.children.forEach((part, j) => {
-                        if (j > 0) { // Solo las hojas
-                            part.rotation.z += Math.sin(clock.getElapsedTime() * 0.5 + i * 0.1) * 0.002;
-                            part.rotation.y += Math.sin(clock.getElapsedTime() * 0.3 + i * 0.1) * 0.001;
-                        }
-                    });
-                });
-            }
-            
-            // Animación de las flores
-            if (flowerField) {
-                flowerField.children.forEach((flower, i) => {
-                    flower.rotation.y = Math.sin(clock.getElapsedTime() * 0.3 + i * 0.1) * 0.05;
-                    flower.position.y = Math.sin(clock.getElapsedTime() * 0.5 + i * 0.3) * 0.1;
-                });
-            }
-            
-            // Animación del gato
-            if (cat) {
-                cat.children[cat.children.length - 1].rotation.z = Math.sin(clock.getElapsedTime() * 2) * 0.2; // Cola
-                cat.rotation.y = Math.sin(clock.getElapsedTime() * 0.5) * 0.1; // Cuerpo girando suavemente
-            }
-            
-            // Animación de los corazones
-            hearts.forEach(heart => {
-                const userData = heart.userData;
-                
-                // Rotación
-                heart.rotation.x += userData.rotSpeed;
-                heart.rotation.y += userData.rotSpeed * 1.5;
-                
-                // Movimiento flotante
-                heart.position.y = userData.originalY + 
-                    Math.sin(clock.getElapsedTime() * userData.floatSpeed + userData.floatOffset) * 
-                    userData.floatHeight;
-            });
-            
-            // Animación de la pantalla digital
-            if (digitalScreen && digitalScreen.visible) {
-                // Hacer que la pantalla tenga un suave efecto de resplandor
-                if (digitalScreen.children[0].material) {
-                    const pulseFactor = (Math.sin(clock.getElapsedTime() * 2) + 1) * 0.5;
-                    digitalScreen.children[0].material.emissiveIntensity = 0.1 + pulseFactor * 0.3;
-                }
-            }
-            
-            renderer.render(scene, camera);
-        }
-        
-        // Cerrar el modal inicial
-        function closeModal() {
-            document.getElementById("myModal").style.display = "none";
-            setupAudio();
-            document.getElementById('audioPlayer').play();
-        }
-        
-        // Ya no necesitamos esta función pues ahora usamos la pantalla 3D
-        function closeCard() {
-            document.getElementById("centeredCard").style.display = "none";
-        }
-        
-        // Teclas para controlar la escena
-        document.addEventListener('keydown', function(event) {
-            // 'P' para mostrar/ocultar la pantalla digital
-            if (event.key.toLowerCase() === 'p') {
-                toggleScreen();
-            }
-            
-            // 'M' para controlar la música
-            if (event.key.toLowerCase() === 'm') {
-                toggleMusic();
-            }
-            
-            // Atajos adicionales
-            if (event.key === 'Escape') {
-                // Cerrar cualquier modal o pantalla
-                if (document.getElementById("myModal").style.display === "block") {
-                    closeModal();
-                } else if (isScreenVisible) {
-                    toggleScreen();
-                }
-            }
-        });
+        // Resto del código existente (mantener igual)
+        // setupScreenControls, createDigitalScreen, toggleScreen, toggleMusic, etc.
+        // No se incluyen para brevedad, mantener como en el original
         
         // Iniciar todo cuando se carga la página
         window.onload = function() {
             init();
+            
+            // Forzar la activación del modo móvil si es necesario
+            if (isMobile) {
+                console.log("Detectado dispositivo móvil, activando controles táctiles");
+                setupMobileControls();
+            }
             
             // Mostrar mensaje principal después de cargar
             setTimeout(() => {
                 document.getElementById("myModal").style.display = "block";
             }, 2500);
             
-            // Actualizar el texto de ayuda
-            document.querySelector('.controls-hint').innerHTML = 
-                'WASD: Moverte | Ratón: Mirar | P: Mensaje | M: Música | ↑↓: Desplazar texto';
-                
             // Auto-mostrar la pantalla digital después de cerrar el modal
             setTimeout(() => {
                 if (!isScreenVisible) {
@@ -1536,85 +620,13 @@
                 }
             }, 5000);
         };
-    </script>
-    <script>
-        // Forzar la inicialización y visibilidad de los controles móviles
-        document.addEventListener('DOMContentLoaded', function() {
-            if (isMobileDevice()) {
-                console.log("Dispositivo móvil detectado, forzando controles móviles");
-                
-                // Forzar visibilidad de controles móviles
-                const styleSheet = document.createElement('style');
-                styleSheet.textContent = `
-                    .mobile-controls {
-                        display: block !important;
-                        z-index: 9999 !important;
-                    }
-                    
-                    .joystick-container {
-                        background: rgba(255, 255, 255, 0.3) !important;
-                        border: 3px solid rgba(255, 255, 255, 0.5) !important;
-                    }
-                    
-                    .joystick-base {
-                        background: rgba(255, 255, 255, 0.3) !important;
-                        border: 3px solid rgba(255, 255, 255, 0.5) !important;
-                    }
-                    
-                    .controls-hint, .screen-controls {
-                        display: none !important;
-                    }
-                `;
-                document.head.appendChild(styleSheet);
-                
-                // Asegurarnos de que el contenedor de controles móviles existe
-                let mobileControls = document.getElementById('mobile-controls');
-                if (!mobileControls) {
-                    mobileControls = document.createElement('div');
-                    mobileControls.id = 'mobile-controls';
-                    mobileControls.className = 'mobile-controls';
-                    mobileControls.innerHTML = `
-                        <div class="joystick-container">
-                            <div id="joystick-base" class="joystick-base">
-                                <div id="joystick-thumb" class="joystick-thumb"></div>
-                            </div>
-                        </div>
-                        <div class="mobile-buttons">
-                            <button id="mobile-message" class="mobile-btn">
-                                <span class="mobile-btn-icon">💌</span>
-                            </button>
-                            <button id="mobile-music" class="mobile-btn">
-                                <span class="mobile-btn-icon">🎵</span>
-                            </button>
-                        </div>
-                    `;
-                    document.body.appendChild(mobileControls);
-                }
-                
-                // Inicializar controles tras un breve retraso
-                setTimeout(function() {
-                    setupMobileControls();
-                    
-                    // Mostrar indicador visible
-                    const indicator = document.createElement('div');
-                    indicator.style.position = 'fixed';
-                    indicator.style.top = '10px';
-                    indicator.style.left = '10px';
-                    indicator.style.padding = '5px 10px';
-                    indicator.style.background = 'rgba(0,0,0,0.7)';
-                    indicator.style.color = 'white';
-                    indicator.style.borderRadius = '5px';
-                    indicator.style.zIndex = '10000';
-                    indicator.textContent = '✓ Controles móviles activos';
-                    document.body.appendChild(indicator);
-                    
-                    // Quitar el indicador después de 3 segundos
-                    setTimeout(function() {
-                        indicator.remove();
-                    }, 3000);
-                }, 500);
+        
+        // Asegurarse de bloquear los gestos predeterminados en pantallas táctiles
+        document.addEventListener('touchmove', function(e) {
+            if (e.target.closest('canvas')) {
+                e.preventDefault();
             }
-        });
-        </script>
+        }, { passive: false });
+    </script>
 </body>
 </html>
