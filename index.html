@@ -3,307 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Katty de tu Cholasho❤️</title>
+    <title>Para Katty de tu Cholasho❤️ - Versión 3D</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             margin: 0;
-            height: 100vh;
             overflow: hidden;
             font-family: Arial, sans-serif;
+            color: white;
+            background: #000;
         }
-
-        .scene {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            background: linear-gradient(180deg, 
-                #ff0026 0%,    /* Bright orange at top */
-                #ff1538 10%,
-                #ff9050 30%,   /* Lighter orange */   /* Lighter orange */
-                #110068 40%,   /* Peachy orangeffc880 */
-                #004ac9 65%,   /* Deep red-brown */
-                #ffc880 100%); /* Darkest red-brown 110068*/
-            overflow: hidden;
+        
+        canvas {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
         }
-
-        .sun {
-            position: absolute;
-            top: 15%;
-            left: 50%;
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(#ff0000, #ffbb00);
-            border-radius: 50%;
-            animation: glow 4s infinite alternate;
-            transform: translateX(-50%);
-        }
-
-        @keyframes glow {
-            from { 
-                box-shadow: 0 0 100px #ff8800,
-                           0 0 200px rgba(255, 5, 1, 0.612);
-            }
-            to { 
-                box-shadow: 0 0 150px #f13d1a,
-                           0 0 300px rgb(255, 59, 59);
-            }
-        }
-
-        .sand {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 30%;
-            background: linear-gradient(180deg, #4f4b27, #d4b94b);
-        }
-
-        .palm {
-            position: absolute;
-            bottom: 28%;
-            animation: palmSway 6s ease-in-out infinite;
-            transform-origin: bottom center;
-            filter: brightness(0.1); /* Makes palms appear as silhouettes */
-        }
-
-        .palm {
-            position: absolute;
-            bottom: 28%;
-            animation: palmSway 6s ease-in-out infinite;
-            transform-origin: bottom center;
-        }
-
-        @keyframes palmSway {
-            0%, 100% { transform: rotate(-5deg); }
-            50% { transform: rotate(5deg); }
-        }
-
-        .palm-left {
-            left: 15%;
-        }
-
-        .palm-right {
-            right: 15%;
-            animation-delay: -3s;
-        }
-
-        .trunk {
-            position: relative;
-            width: 30px;
-            height: 160px;
-            background: linear-gradient(45deg, #8B4513, #A0522D);
-            border-radius: 50%/10%;
-            transform: rotate(-15deg);
-            box-shadow: -5px 5px 10px rgba(0,0,0,0.3);
-        }
-
-        .trunk::before {
-            content: '';
-            position: absolute;
+        
+        .centered-card {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, 
-                rgba(139,69,19,0.7) 0%,
-                rgba(160,82,45,0) 50%,
-                rgba(139,69,19,0.7) 100%);
-            border-radius: inherit;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
         }
 
-        .leaves {
+        .card-content {
+            background: linear-gradient(135deg, #ff7f50, #ff4757);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5),
+                        0 0 100px rgba(255, 79, 87, 0.6),
+                        inset 0 0 20px rgba(255, 255, 255, 0.2);
+            width: 80%;
+            max-width: 800px;
+            height: auto;
+            max-height: 90%;
+            overflow-y: auto;
+            animation: fadeIn 1s ease-out, float 6s ease-in-out infinite;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .card-content p {
+            font-size: 18px;
+            line-height: 1.8;
+            margin: 0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            transform: translateZ(20px);
+        }
+
+        .close {
             position: absolute;
-            top: -50px;
-            left: -30px;
-            transform-origin: bottom center;
-            animation: leavesRustle 4s ease-in-out infinite;
-        }
-
-        @keyframes leavesRustle {
-            0%, 100% { transform: rotate(-2deg) scale(1); }
-            50% { transform: rotate(2deg) scale(1.05); }
-        }
-
-        .leaf {
-            position: absolute;
-            width: 100px;
-            height: 25px;
-            background: linear-gradient(to right, #43ff43, #00ff00);
-            border-radius: 100px 0;
-            transform-origin: left center;
-            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .leaf:nth-child(1) { transform: rotate(-30deg); animation-delay: -0.2s; }
-        .leaf:nth-child(2) { transform: rotate(0deg); animation-delay: -0.4s; }
-        .leaf:nth-child(3) { transform: rotate(30deg); animation-delay: -0.6s; }
-
-        /* Existing flower and cat styles remain the same */
-        .flower-container {
-            position: absolute;
-            bottom: 10%;
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        .flower {
-            transform: scale(0.7);
-        }
-
-        .realistic-cat {
-            position: absolute;
-            bottom: 22%;
-            left: 50%;
-            transform: translateX(-50%) scale(0.8);
-        }
-
-        /* Rest of your existing flower and cat styles */
-        .flower {
-            position: relative;
-            width: 150px;
-            height: 250px;
-            animation: flowerSway 4s infinite ease-in-out;
-        }
-
-        @keyframes flowerSway {
-            0%, 100% { transform: rotate(2deg); }
-            50% { transform: rotate(-2deg); }
-        }
-
-        .bloom {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            animation: rotate 8s infinite linear;
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.05); }
-            100% { transform: rotate(360deg) scale(1); }
-        }
-
-        .petal {
-            position: absolute;
-            width: 75px;
-            height: 75px;
-            background: linear-gradient(45deg, #ffc400, #e4c00a);
-            border-radius: 50% 0;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            animation: float 3s infinite ease-in-out;
-        }
-
-        .petal:nth-child(1) { top: 0; left: 37.5px; transform: rotate(0deg); }
-        .petal:nth-child(2) { top: 37.5px; left: 0; transform: rotate(90deg); }
-        .petal:nth-child(3) { top: 37.5px; left: 75px; transform: rotate(-90deg); }
-        .petal:nth-child(4) { top: 75px; left: 37.5px; transform: rotate(180deg); }
-
-        .center {
-            position: absolute;
-            top: 37.5px;
-            left: 37.5px;
-            width: 75px;
-            height: 75px;
-            background: radial-gradient(#23200a, #220907);
-            border-radius: 50%;
-        }
-
-        .stem {
-            position: absolute;
-            top: 150px;
-            left: 65px;
-            width: 20px;
-            height: 100px;
-            background: linear-gradient(to bottom, #0a9d0a, #2ecc71);
-            border-radius: 10px;
-        }
-
-        .cat-body {
-            position: absolute;
-            width: 150px;
-            height: 100px;
-            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
-            border-radius: 100px 80px 80px 100px;
-            box-shadow: 
-                inset -10px -10px 20px rgba(0,0,0,0.3),
-                0 10px 20px rgba(0,0,0,0.2);
-            overflow: hidden;
-        }
-
-        .cat-head {
-            position: absolute;
-            width: 80px;
-            height: 60px;
-            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
-            border-radius: 50% 50% 20px 20px;
-            top: -40px;
-            left: 35px;
-            transform: rotate(-5deg);
-            box-shadow: 
-                inset -5px -5px 10px rgba(0,0,0,0.4),
-                0 5px 10px rgba(0,0,0,0.2);
-        }
-
-        .cat-ear {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-bottom: 30px solid #0d0d0d;
-            transform-origin: bottom center;
-        }
-
-        .cat-ear-left {
-            top: -20px;
-            left: 5px;
-            transform: rotate(-30deg);
-        }
-
-        .cat-ear-right {
-            top: -20px;
-            right: 5px;
-            transform: rotate(30deg);
-        }
-
-        .cat-eye {
-            position: absolute;
-            width: 15px;
-            height: 10px;
-            background: linear-gradient(135deg, #d4af37, #ffd700);
-            border-radius: 50%;
-            top: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-        }
-
-        .cat-eye-left {
-            left: 20px;
-            transform: rotate(-10deg);
-        }
-
-        .cat-eye-right {
+            top: 15px;
             right: 20px;
-            transform: rotate(10deg);
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.4s;
+            z-index: 10;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
-        .cat-tail {
-            position: absolute;
-            width: 10px;
-            height: 100px;
-            background: linear-gradient(to bottom, #0d0d0d, #353535);
-            border-radius: 50px;
-            bottom: -30px;
-            right: 0;
-            transform-origin: top;
-            animation: tailWag 2s infinite ease-in-out;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        .close:hover {
+            transform: scale(1.3) rotate(90deg);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 1);
         }
 
-        @keyframes tailWag {
-            0%, 100% { transform: rotate(10deg); }
-            50% { transform: rotate(-10deg); }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) rotateX(-10deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotateX(0);
+            }
         }
-
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotateX(0deg);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5),
+                            0 0 100px rgba(255, 79, 87, 0.6);
+            }
+            50% {
+                transform: translateY(-15px) rotateX(3deg);
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3),
+                            0 0 120px rgba(255, 79, 87, 0.8);
+            }
+        }
         
         .modal {
             display: none;
@@ -314,7 +117,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0,0,0,0.6);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
         }
 
         .modal-content {
@@ -322,22 +125,50 @@
             margin: 15% auto;
             padding: 30px;
             width: 90%;
-            max-width: 400px;
+            max-width: 500px;
             background: linear-gradient(135deg, #ff7f50, #ff4757);
             border-radius: 20px;
             text-align: center;
             color: white;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-            animation: modalAppear 0.5s ease-out;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5),
+                        0 0 100px rgba(255, 100, 100, 0.4);
+            animation: modalAppear 0.8s cubic-bezier(0.17, 0.89, 0.32, 1.25);
+            transform-style: preserve-3d;
+        }
+        
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                rgba(255, 255, 255, 0.1), 
+                rgba(255, 255, 255, 0.3), 
+                rgba(255, 255, 255, 0.1), 
+                rgba(255, 255, 255, 0.3));
+            z-index: -1;
+            border-radius: 22px;
+            animation: borderGlow 3s linear infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% {
+                opacity: 0.8;
+            }
+            50% {
+                opacity: 0.3;
+            }
         }
 
         @keyframes modalAppear {
             from {
-                transform: scale(0.8);
+                transform: scale(0.5) rotateX(-30deg);
                 opacity: 0;
             }
             to {
-                transform: scale(1);
+                transform: scale(1) rotateX(0);
                 opacity: 1;
             }
         }
@@ -345,278 +176,1236 @@
         .modal-content p {
             font-size: 24px;
             margin: 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+            transform: translateZ(30px);
         }
-
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 30px;
+        
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff4757, #ff7f50);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            transition: opacity 1s ease-out;
+        }
+        
+        .loading-text {
+            font-size: 24px;
+            margin-top: 20px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            animation: pulse 1.5s infinite;
+        }
+        
+        .loading-heart {
+            font-size: 50px;
+            animation: heartbeat 1.2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.3); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.3); }
+            60% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+        
+        .controls-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.6);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            opacity: 0.7;
+            z-index: 100;
+            transition: opacity 0.3s;
+        }
+        
+        .controls-hint:hover {
+            opacity: 1;
+        }
+        
+        /* Estilos para los controles de la pantalla digital */
+        .screen-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+        
+        .control-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 79, 87, 0.8);
+            border: none;
+            border-radius: 12px;
+            padding: 10px;
             color: white;
             cursor: pointer;
-            transition: transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
-
-        .close:hover {
-            transform: scale(1.2) rotate(90deg);
+        
+        .control-btn:hover {
+            background: rgba(255, 127, 80, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+        }
+        
+        .btn-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .btn-text {
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        /* Indicador de música activa */
+        .music-active .btn-icon {
+            animation: pulse 1s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.2); }
         }
     </style>
 </head>
 <body>
-    <div class="scene">
-        <div class="sun"></div>
-        
-        <div class="palm palm-left">
-            <div class="trunk"></div>
-            <div class="leaves">
-                <div class="leaf"></div>
-                <div class="leaf"></div>
-                <div class="leaf"></div>
-            </div>
-        </div>
-        <div class="palm palm-left">
-            <div class="trunk"></div>
-            <div class="leaves">
-                <div class="leaf"></div>
-                <div class="leaf"></div>
-                <div class="leaf"></div>
-            </div>
-        </div>
-        
-        <div class="palm palm-right">
-            <div class="trunk"></div>
-            <div class="leaves">
-                <div class="leaf"></div>
-                <div class="leaf"></div>
-                <div class="leaf"></div>
-            </div>
-        </div>
-        <div class="palm palm-right">
-            <div class="trunk"></div>
-            <div class="leaves">
-                <div class="leaf"></div>
-                <div class="leaf"></div>
-                <div class="leaf"></div>
-            </div>
-        </div>
-
-        <div class="sand"></div>
-        
-        <div class="flower-container">
-            <div class="flower">
-                <div class="bloom">
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="center"></div>
-                </div>
-                <div class="stem"></div>
-            </div>
-            <div class="flower">
-                <div class="bloom">
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="center"></div>
-                </div>
-                <div class="stem"></div>
-            </div>
-            <div class="flower">
-                <div class="bloom">
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="center"></div>
-                </div>
-                <div class="stem"></div>
-            </div>
-            <div class="flower">
-                <div class="bloom">
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="center"></div>
-                </div>
-                <div class="stem"></div>
-            </div>
-            <div class="flower">
-                <div class="bloom">
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="center"></div>
-                </div>
-                <div class="stem"></div>
-            </div>
-            <div class="flower">
-                <div class="bloom">
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="center"></div>
-                </div>
-                <div class="stem"></div>
-            </div>
-            <div class="flower">
-                <div class="bloom">
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="center"></div>
-                </div>
-                <div class="stem"></div>
-            </div>
-             <div class="flower">
-                <div class="bloom">
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="petal"></div>
-                    <div class="center"></div>
-                </div>
-                <div class="stem"></div>
-            </div>
-            
-        </div>
-
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-heart">❤️</div>
+        <div class="loading-text">Cargando nuestro mundo...</div>
     </div>
-    <div id="centeredCard" class="centered-card">
-    <div class="card-content">
-        <span class="close" onclick="closeCard()">&times;</span>
-        <p>
-            Mi amor,<br><br>
-            Quiero empezar diciéndote algo que quizá no te he dicho con suficiente claridad: estoy aquí, contigo, y quiero estarlo. No soy perfecto, lo sé. A veces me pierdo en mis pensamientos, en mis despistes, en mis maneras de ser. Pero contigo, todo eso cambia. Porque contigo quiero aprender, quiero crecer, quiero ser mejor.<br><br>
-            Sé que el amor no es solo palabras bonitas ni gestos grandiosos. Es constancia, es paciencia, es estar ahí incluso cuando las cosas no son fáciles. Y eso es lo que quiero construir contigo. No te prometo ser el hombre perfecto, pero sí te prometo ser un hombre que está dispuesto a intentarlo todo por ti, por nosotros.<br><br>
-            A veces, mi forma de ser puede parecer distante o distraída, pero quiero que sepas que en mi corazón siempre estás tú. Estoy aprendiendo a quererte como tú necesitas ser querida, a entenderte, a escucharte, a estar presente de la manera que mereces. Porque tú mereces todo, y yo quiero ser quien te lo dé.<br><br>
-            No sé qué nos depara el futuro, pero sí sé que quiero que estés en él. Quiero que cada paso que demos sea hacia algo más grande, más fuerte, más nuestro. Y aunque no siempre tenga las palabras correctas o los gestos perfectos, quiero que sepas que mi intención siempre es amarte de la mejor manera que pueda.<br><br>
-            Gracias por ser tú. Por tu paciencia, por tu risa, por tus ojos que me miran como si vieran algo en mí que a veces ni yo mismo veo. Gracias por darme la oportunidad de ser parte de tu vida. Prometo no tomarlo a la ligera.<br><br>
-            Con todo mi corazón De tu Cholasho Diego❤️<br><br>
-        </p>
+    
+    <div class="controls-hint">Usa el ratón para mirar alrededor y las teclas WASD para moverte</div>
+    
+    <!-- Reemplazamos la tarjeta centrada con la pantalla digital 3D que se manejará en Three.js -->
+    <div id="screenControls" class="screen-controls">
+        <button id="toggleScreen" class="control-btn">
+            <span class="btn-icon">💌</span>
+            <span class="btn-text">Mostrar Mensaje</span>
+        </button>
+        <button id="toggleMusic" class="control-btn">
+            <span class="btn-icon">🎵</span>
+            <span class="btn-text">Música</span>
+        </button>
     </div>
-</div>
-
-<style>
-    .centered-card {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        z-index: 1000;
-    }
-
-    .card-content {
-        background: linear-gradient(135deg, #ff7f50, #ff4757);
-        padding: 20px;
-        border-radius: 15px;
-        text-align: center;
-        color: white;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-        width: 80%; /* Más ancho */
-        max-width: 800px; /* Límite máximo de ancho */
-        height: auto; /* Ajusta la altura automáticamente */
-        max-height: 90%; /* Límite máximo de altura */
-        overflow-y: auto; /* Habilita el scroll si el contenido es demasiado alto */
-        animation: fadeIn 0.5s ease-out;
-    }
-
-    .card-content p {
-        font-size: 16px; /* Ajusta el tamaño del texto */
-        line-height: 1.8; /* Espaciado entre líneas */
-        margin: 0;
-    }
-
-    .close {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        font-size: 30px;
-        color: white;
-        cursor: pointer;
-        transition: transform 0.3s;
-    }
-
-    .close:hover {
-        transform: scale(1.2) rotate(90deg);
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: scale(0.8);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-</style>
-
-<script>
-    function closeCard() {
-        document.getElementById("centeredCard").style.display = "none";
-    }
-</script>
 
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <p>¡TE QUIERO MI AMORCITO, ESPERO PASAR MUCHO MUCHO MUCHO MUCHOOOOOOOOOOOOOO TIEMPO CONTIGO, ME GUSTA ESTAR A TU LADO Y VOY A HACER TODA LOCURA POR TI❤️🫶!</p>
+            <p>Amooooooooor e construido este mundito para ti<3</p>
         </div>
     </div>
 
-    <audio id="audioPlayer" src="Daft Punk - Touch (Choral Version from Epilogue - Extended).mp3" style="display:none" preload="auto"></audio>
+    <audio id="audioPlayer" src="Daft Punk - Touch (Choral Version from Epilogue - Extended).mp3" preload="auto" style="display:none"></audio>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.min.js"></script>
     <script>
-        let currentSlide = 0;
-
-        function showSlide(index) {
-            const slides = document.querySelectorAll('.carousel-images img');
-            if (index >= slides.length) {
-                currentSlide = 0;
-            } else if (index < 0) {
-                currentSlide = slides.length - 1;
-            } else {
-                currentSlide = index;
+        // Variables principales
+        let scene, camera, renderer, composer;
+        let sun, palmGroup, flowerField, cat, hearts = [];
+        let clock = new THREE.Clock();
+        const loader = new THREE.TextureLoader();
+        
+        // Manejo de audio con un efecto de fade in
+        function setupAudio() {
+            const audioElement = document.getElementById('audioPlayer');
+            // Usamos la ruta original del archivo
+            // Ya está definida en el elemento audio como "Daft Punk - Touch (Choral Version from Epilogue - Extended).mp3"
+            audioElement.loop = true;
+            audioElement.volume = 0;
+            
+            // Hacemos un fade in del volumen
+            let vol = 0;
+            const intervalId = setInterval(() => {
+                if (vol < 0.5) {
+                    vol += 0.01;
+                    audioElement.volume = vol;
+                } else {
+                    clearInterval(intervalId);
+                }
+            }, 100);
+            
+            // Marcamos que la música está reproduciéndose
+            isMusicPlaying = true;
+            const musicBtn = document.getElementById('toggleMusic');
+            if (musicBtn) {
+                musicBtn.classList.add('music-active');
+                musicBtn.querySelector('.btn-text').textContent = 'Pausar';
+                musicBtn.querySelector('.btn-icon').textContent = '♫';
             }
-            const offset = -currentSlide * 100;
-            document.querySelector('.carousel-images').style.transform = `translateX(${offset}%)`;
         }
-
-        function nextSlide() {
-            showSlide(currentSlide + 1);
+        
+        // Inicializar la escena
+        function init() {
+            // Crear escena
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0xff7e57, 0.02);
+            
+            // Configurar cámara
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 5, 20);
+            camera.lookAt(0, 5, 0);
+            
+            // Configurar renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.outputEncoding = THREE.sRGBEncoding;
+            document.body.appendChild(renderer.domElement);
+            
+            // Añadir luz ambiental para iluminación general
+            const ambientLight = new THREE.AmbientLight(0xffd4b3, 0.5);
+            scene.add(ambientLight);
+            
+            // Crear elementos de la escena
+            createSkybox();
+            createSun();
+            createGround();
+            createPalms();
+            createFlowers();
+            createCat();
+            createParticles();
+            createDigitalScreen();
+            
+            // Configurar eventos y controles
+            setupControls();
+            setupScreenControls();
+            window.addEventListener('resize', onWindowResize);
+            
+            // Ocultar la pantalla de carga después de inicializar todo
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = 0;
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                    document.getElementById('myModal').style.display = 'block';
+                }, 1000);
+            }, 1500);
+            
+            // Iniciar la animación
+            animate();
         }
-
-        function prevSlide() {
-            showSlide(currentSlide - 1);
+        
+        function setupScreenControls() {
+            // Configurar los controles de la pantalla digital
+            document.getElementById('toggleScreen').addEventListener('click', toggleScreen);
+            document.getElementById('toggleMusic').addEventListener('click', toggleMusic);
+            
+            // Configurar controles de scroll para la pantalla
+            document.addEventListener('keydown', (event) => {
+                if (isScreenVisible) {
+                    if (event.key === 'ArrowUp') {
+                        // Scroll hacia arriba en el texto
+                        window.screenTextOffset = Math.max(0, window.screenTextOffset - 1);
+                    } else if (event.key === 'ArrowDown') {
+                        // Scroll hacia abajo en el texto
+                        window.screenTextOffset = Math.min(13, window.screenTextOffset + 1);
+                    }
+                }
+            });
         }
-
-        window.onload = function() {
-            document.getElementById("myModal").style.display = "block";
-            showSlide(currentSlide);
-        };
-
+        
+        // Crear el skybox (cielo)
+        function createSkybox() {
+            // Creamos un gradiente de cielo con geometría
+            const skyGeometry = new THREE.SphereGeometry(500, 32, 32);
+            
+            // Material para el cielo con gradiente de atardecer
+            const uniforms = {
+                topColor: { value: new THREE.Color(0xff0026) },
+                bottomColor: { value: new THREE.Color(0x004ac9) },
+                offset: { value: 50 },
+                exponent: { value: 0.6 }
+            };
+            
+            const skyMaterial = new THREE.ShaderMaterial({
+                uniforms: uniforms,
+                vertexShader: `
+                    varying vec3 vWorldPosition;
+                    void main() {
+                        vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+                        vWorldPosition = worldPosition.xyz;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform vec3 topColor;
+                    uniform vec3 bottomColor;
+                    uniform float offset;
+                    uniform float exponent;
+                    varying vec3 vWorldPosition;
+                    void main() {
+                        float h = normalize(vWorldPosition + offset).y;
+                        gl_FragColor = vec4(mix(bottomColor, topColor, max(pow(max(h, 0.0), exponent), 0.0)), 1.0);
+                    }
+                `,
+                side: THREE.BackSide
+            });
+            
+            const sky = new THREE.Mesh(skyGeometry, skyMaterial);
+            scene.add(sky);
+            
+            // Añadir estrellas al cielo
+            const starsGeometry = new THREE.BufferGeometry();
+            const starsMaterial = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 0.7,
+                transparent: true,
+                opacity: 0.8,
+                sizeAttenuation: true
+            });
+            
+            const starsVertices = [];
+            for (let i = 0; i < 1000; i++) {
+                const x = THREE.MathUtils.randFloatSpread(600);
+                const y = THREE.MathUtils.randFloat(50, 250); // Estrellas solo en la parte superior
+                const z = THREE.MathUtils.randFloatSpread(600);
+                starsVertices.push(x, y, z);
+            }
+            
+            starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
+            const starField = new THREE.Points(starsGeometry, starsMaterial);
+            scene.add(starField);
+        }
+        
+        // Crear el sol
+        function createSun() {
+            const sunGeometry = new THREE.SphereGeometry(10, 32, 32);
+            const sunMaterial = new THREE.MeshBasicMaterial({
+                color: 0xff5500,
+                transparent: true,
+                opacity: 0.9
+            });
+            
+            sun = new THREE.Mesh(sunGeometry, sunMaterial);
+            sun.position.set(0, 60, -150);
+            scene.add(sun);
+            
+            // Añadir resplandor al sol
+            const sunLightGeometry = new THREE.SphereGeometry(15, 32, 32);
+            const sunLightMaterial = new THREE.MeshBasicMaterial({
+                color: 0xffaa00,
+                transparent: true,
+                opacity: 0.5
+            });
+            
+            const sunGlow = new THREE.Mesh(sunLightGeometry, sunLightMaterial);
+            sun.add(sunGlow);
+            
+            // Luz direccional para simular la luz del sol
+            const sunLight = new THREE.DirectionalLight(0xfffaf0, 1);
+            sunLight.position.set(0, 100, -150);
+            sunLight.castShadow = true;
+            sunLight.shadow.camera.far = 300;
+            sunLight.shadow.camera.left = -100;
+            sunLight.shadow.camera.right = 100;
+            sunLight.shadow.camera.top = 100;
+            sunLight.shadow.camera.bottom = -100;
+            sunLight.shadow.mapSize.width = 1024;
+            sunLight.shadow.mapSize.height = 1024;
+            scene.add(sunLight);
+        }
+        
+        // Crear el suelo
+        function createGround() {
+            // Arena
+            const sandGeometry = new THREE.PlaneGeometry(1000, 1000);
+            const sandMaterial = new THREE.MeshStandardMaterial({
+                color: 0xd4b94b,
+                roughness: 0.8,
+                metalness: 0.1
+            });
+            
+            const sand = new THREE.Mesh(sandGeometry, sandMaterial);
+            sand.rotation.x = -Math.PI / 2;
+            sand.position.y = -1;
+            sand.receiveShadow = true;
+            scene.add(sand);
+            
+            // Agua
+            const waterGeometry = new THREE.PlaneGeometry(1000, 800);
+            const waterMaterial = new THREE.MeshStandardMaterial({
+                color: 0x0088ff,
+                roughness: 0.1,
+                metalness: 0.6,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const water = new THREE.Mesh(waterGeometry, waterMaterial);
+            water.rotation.x = -Math.PI / 2;
+            water.position.y = -0.5;
+            water.position.z = -300;
+            scene.add(water);
+        }
+        
+        // Crear palmeras
+        function createPalms() {
+            palmGroup = new THREE.Group();
+            scene.add(palmGroup);
+            
+            // Función para crear una sola palmera
+            function createPalm(x, z, scaleVal = 1, rotY = 0) {
+                const palm = new THREE.Group();
+                
+                // Tronco
+                const trunkGeometry = new THREE.CylinderGeometry(0.5, 0.7, 15, 8);
+                const trunkMaterial = new THREE.MeshStandardMaterial({
+                    color: 0x8B4513,
+                    roughness: 0.9,
+                    metalness: 0.1
+                });
+                
+                const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
+                trunk.castShadow = true;
+                trunk.position.y = 7.5;
+                
+                // Inclinación aleatoria del tronco
+                trunk.rotation.x = THREE.MathUtils.randFloatSpread(0.1);
+                trunk.rotation.z = THREE.MathUtils.randFloatSpread(0.1);
+                
+                palm.add(trunk);
+                
+                // Hojas
+                const leafShape = new THREE.Shape();
+                leafShape.moveTo(0, 0);
+                leafShape.bezierCurveTo(2, 1, 8, 1.5, 10, 0);
+                leafShape.bezierCurveTo(8, -1.5, 2, -1, 0, 0);
+                
+                const extrudeSettings = {
+                    depth: 0.1,
+                    bevelEnabled: true,
+                    bevelThickness: 0.1,
+                    bevelSize: 0.1,
+                    bevelSegments: 3
+                };
+                
+                const leafGeometry = new THREE.ExtrudeGeometry(leafShape, extrudeSettings);
+                const leafMaterial = new THREE.MeshStandardMaterial({
+                    color: 0x00aa00,
+                    roughness: 0.8,
+                    metalness: 0.1,
+                    side: THREE.DoubleSide
+                });
+                
+                // Crear varias hojas y posicionarlas
+                for (let i = 0; i < 7; i++) {
+                    const leaf = new THREE.Mesh(leafGeometry, leafMaterial);
+                    leaf.castShadow = true;
+                    leaf.rotation.z = (i * Math.PI / 3.5);
+                    leaf.rotation.y = (i * Math.PI / 7);
+                    leaf.position.y = 15;
+                    leaf.scale.set(1, 1 + Math.random() * 0.5, 1);
+                    palm.add(leaf);
+                }
+                
+                // Posicionar la palmera completa
+                palm.position.set(x, 0, z);
+                palm.rotation.y = rotY;
+                palm.scale.set(scaleVal, scaleVal, scaleVal);
+                
+                return palm;
+            }
+            
+            // Distribuir varias palmeras
+            const palmPositions = [
+                { x: -25, z: 0, scale: 1.2, rotY: Math.PI/4 },
+                { x: -18, z: 8, scale: 0.9, rotY: Math.PI/3 },
+                { x: 25, z: 5, scale: 1.1, rotY: -Math.PI/5 },
+                { x: 20, z: -8, scale: 0.8, rotY: -Math.PI/6 },
+                { x: -12, z: -15, scale: 1, rotY: Math.PI/8 },
+                { x: 15, z: -18, scale: 1.3, rotY: -Math.PI/9 },
+                { x: -30, z: -25, scale: 1.5, rotY: Math.PI/7 },
+                { x: 30, z: -30, scale: 1.4, rotY: -Math.PI/8 }
+            ];
+            
+            palmPositions.forEach(pos => {
+                const palm = createPalm(pos.x, pos.z, pos.scale, pos.rotY);
+                palmGroup.add(palm);
+            });
+        }
+        
+        // Crear flores
+        function createFlowers() {
+            flowerField = new THREE.Group();
+            scene.add(flowerField);
+            
+            // Función para crear una flor
+            function createFlower(x, z, scale = 1, color = 0xffc400) {
+                const flower = new THREE.Group();
+                
+                // Tallo
+                const stemGeometry = new THREE.CylinderGeometry(0.1, 0.15, 3, 8);
+                const stemMaterial = new THREE.MeshStandardMaterial({
+                    color: 0x2ecc71,
+                    roughness: 0.8
+                });
+                
+                const stem = new THREE.Mesh(stemGeometry, stemMaterial);
+                stem.castShadow = true;
+                stem.position.y = 1.5;
+                flower.add(stem);
+                
+                // Centro de la flor
+                const centerGeometry = new THREE.SphereGeometry(0.5, 16, 16);
+                const centerMaterial = new THREE.MeshStandardMaterial({
+                    color: 0x23200a,
+                    roughness: 0.9
+                });
+                
+                const center = new THREE.Mesh(centerGeometry, centerMaterial);
+                center.castShadow = true;
+                center.position.y = 3.2;
+                flower.add(center);
+                
+                // Pétalos
+                const petalGeometry = new THREE.ConeGeometry(0.8, 1.5, 4);
+                const petalMaterial = new THREE.MeshStandardMaterial({
+                    color: color,
+                    roughness: 0.6,
+                    metalness: 0.1
+                });
+                
+                // Crear pétalos alrededor del centro
+                for (let i = 0; i < 8; i++) {
+                    const petal = new THREE.Mesh(petalGeometry, petalMaterial);
+                    petal.castShadow = true;
+                    
+                    // Posicionar alrededor del centro
+                    const angle = (i / 8) * Math.PI * 2;
+                    petal.position.set(
+                        Math.cos(angle) * 0.6,
+                        3.2,
+                        Math.sin(angle) * 0.6
+                    );
+                    
+                    // Apuntar hacia afuera
+                    petal.lookAt(
+                        Math.cos(angle) * 10,
+                        3.2,
+                        Math.sin(angle) * 10
+                    );
+                    
+                    // Rotar para que el cono apunte hacia afuera
+                    petal.rotateX(Math.PI / 2);
+                    
+                    flower.add(petal);
+                }
+                
+                // Posicionar la flor completa
+                flower.position.set(x, 0, z);
+                flower.scale.set(scale, scale, scale);
+                
+                return flower;
+            }
+            
+            // Distribuir múltiples flores
+            const flowerColors = [0xffc400, 0xff9500, 0xff5f00, 0xffcc00, 0xff8800];
+            
+            for (let i = 0; i < 80; i++) {
+                const x = THREE.MathUtils.randFloatSpread(60);
+                const z = THREE.MathUtils.randFloatSpread(60);
+                const scale = 0.3 + Math.random() * 0.3;
+                const colorIndex = Math.floor(Math.random() * flowerColors.length);
+                
+                // Evitar colocar flores muy cerca de las palmeras
+                let tooClose = false;
+                palmGroup.children.forEach(palm => {
+                    const dx = palm.position.x - x;
+                    const dz = palm.position.z - z;
+                    const distSq = dx * dx + dz * dz;
+                    if (distSq < 25) { // 5 al cuadrado
+                        tooClose = true;
+                    }
+                });
+                
+                if (!tooClose) {
+                    const flower = createFlower(x, z, scale, flowerColors[colorIndex]);
+                    flowerField.add(flower);
+                }
+            }
+        }
+        
+        // Crear el gato
+        // Pantalla digital 3D
+        let digitalScreen;
+        let isScreenVisible = false;
+        let isMusicPlaying = false;
+        
+        function createDigitalScreen() {
+            // Grupo principal para la pantalla
+            digitalScreen = new THREE.Group();
+            
+            // Crear el marco de la pantalla (más grande)
+            const frameGeometry = new THREE.BoxGeometry(30, 20, 0.5);
+            const frameMaterial = new THREE.MeshStandardMaterial({
+                color: 0xff4757,
+                roughness: 0.2,
+                metalness: 0.8,
+                emissive: 0xff4757,
+                emissiveIntensity: 0.2
+            });
+            
+            const frame = new THREE.Mesh(frameGeometry, frameMaterial);
+            frame.castShadow = true;
+            frame.receiveShadow = true;
+            digitalScreen.add(frame);
+            
+            // Crear la pantalla en sí (más grande)
+            const screenGeometry = new THREE.PlaneGeometry(29, 19);
+            
+            // Crear un canvas para la textura de la pantalla
+            const canvas = document.createElement('canvas');
+            canvas.width = 1400;
+            canvas.height = 900;
+            const context = canvas.getContext('2d');
+            
+            // Rellenar el fondo
+            context.fillStyle = 'rgba(0, 0, 0, 0.8)';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Añadir un borde brillante
+            context.strokeStyle = 'rgba(255, 127, 80, 0.8)';
+            context.lineWidth = 10;
+            context.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
+            
+            // Añadir un gradiente de fondo
+            const gradient = context.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, 'rgba(255, 79, 87, 0.2)');
+            gradient.addColorStop(0.5, 'rgba(255, 127, 80, 0.1)');
+            gradient.addColorStop(1, 'rgba(255, 204, 0, 0.2)');
+            context.fillStyle = gradient;
+            context.fillRect(10, 10, canvas.width - 20, canvas.height - 20);
+            
+            // Configurar el estilo del texto
+            context.font = 'bold 36px Arial';
+            context.textAlign = 'center';
+            context.fillStyle = 'white';
+            context.shadowColor = 'rgba(255, 127, 80, 0.8)';
+            context.shadowBlur = 15;
+            
+            // Escribir el texto del mensaje
+            const text = [
+                "Mi amor,",
+                "",
+                "Amor, ya vamos más de dos meses, y cada día que pasa me doy cuenta ",
+                "de algo: quiero que estés en mi vida, no solo ahorita, sino siempre.",
+                "No me importa la distancia, no me importa lo que venga, yo estoy aquí, ",
+                "contigo, y siempre vas a estar en mis planes. Porque tú no eres un  ",
+                "agregado, tú eres el centro de todo.",
+                "",
+                "Estoy terminando mi carrera, y aunque estos meses hayamos tenido pequeños ",
+                "problemas, siempre lo hemos solucionado, lo que más me motiva es pensar en ",
+                "el momento en que ya podamos estar juntos, sin estar contando los días ni las horas.",
+                "Cada vez que despierto y veo tu mensaje, siento que el día va a ser mejor.",
+                "Cada vez que me dices que me quieres, siento que el mundo es un lugar mejor.",
+                "Cada viaje que hago para verte, yo se que no son muchos jeje, siempre voy",
+                "emocionado, se que aprendere algo nuevo sobre el amor contigo.",
+                "",
+                "Me gusta como me tratas, como me miras, como te preocupas por mi,",
+                "podria tener el plan mas aburrido del mundo, pero si estoy contigo,",
+                "siento que estoy en el mejor lugar del mundo.",
+                "Eres mi chikistrikis, mi amorcito, mi niña pechocha, mi enojoncita, jeje bromita",
+                "no te enojas tu jeje, te quiero mucho, los dias pasan volando, creo que",
+                "el Diosito está yendo a nuestro favor, hay muchas cosas que quiero hacer",
+                "juntos, la paciencia no es mi mejor virtud, y por ti espero lo que sea necesario.",
+                "",
+                "No olvides que estás en mi corazoncito, se que me faltan detalles contigo, ",
+                "de momento no tengo mucho dinero, y mediante esta detalle digital intangible",
+                "te estoy expresando lo mis mas sinceros sentimeintos, espero te guste.",
+                "De tu cholashooooo.",
+                "",
+            ];
+            
+            // Crear una textura animada para el texto (solo crearemos la primera parte)
+            window.updateScreenText = function(offset = 0) {
+                // Limpiar el canvas
+                context.fillStyle = 'rgba(0, 0, 0, 0.8)';
+                context.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Añadir el borde
+                context.strokeStyle = 'rgba(255, 127, 80, 0.8)';
+                context.lineWidth = 10;
+                context.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
+                
+                // Añadir el gradiente
+                context.fillStyle = gradient;
+                context.fillRect(10, 10, canvas.width - 20, canvas.height - 20);
+                
+                // Configurar el estilo del texto
+                context.font = 'bold 32px Arial';
+                context.textAlign = 'center';
+                context.fillStyle = 'white';
+                context.shadowColor = 'rgba(255, 127, 80, 0.8)';
+                context.shadowBlur = 15;
+                
+                // Dibujar las líneas visibles actualmente
+                const visibleLines = 14; // Número de líneas visibles a la vez
+                const startLine = Math.floor(offset);
+                
+                for (let i = 0; i < visibleLines && i + startLine < text.length; i++) {
+                    context.fillText(
+                        text[i + startLine], 
+                        canvas.width / 2, 
+                        100 + i * 50
+                    );
+                }
+                
+                // Añadir indicador de desplazamiento y controles
+                context.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                context.font = 'bold 24px Arial';
+                context.fillText('↑↓ Desplazar • ❤️ Tu Cholasho Diego', canvas.width / 2, canvas.height - 40);
+                
+                // Añadir indicador de música
+                if (isMusicPlaying) {
+                    context.fillStyle = '#ff4757';
+                    context.font = 'bold 28px Arial';
+                    context.fillText('♫ Música: Daft Punk - Touch ♫', canvas.width / 2, 50);
+                }
+                
+                // Actualizar la textura
+                screenTexture.needsUpdate = true;
+            };
+            
+            // Crear la textura a partir del canvas
+            const screenTexture = new THREE.CanvasTexture(canvas);
+            
+            const screenMaterial = new THREE.MeshBasicMaterial({
+                map: screenTexture,
+                side: THREE.FrontSide
+            });
+            
+            const screen = new THREE.Mesh(screenGeometry, screenMaterial);
+            screen.position.z = 0.26;
+            digitalScreen.add(screen);
+            
+            // Añadir soporte para la pantalla (más grande y adaptado para estar en el suelo)
+            const standGeometry = new THREE.BoxGeometry(3, 0.5, 3);
+            const standMaterial = new THREE.MeshStandardMaterial({
+                color: 0xff4757,
+                roughness: 0.3,
+                metalness: 0.7
+            });
+            
+            const stand = new THREE.Mesh(standGeometry, standMaterial);
+            stand.position.y = -10.25;
+            stand.position.z = 0;
+            digitalScreen.add(stand);
+            
+            // Posicionar y orientar toda la pantalla - ahora está en el suelo
+            digitalScreen.position.set(0, 10, -20); // Posición central, en el suelo, algo alejada
+            digitalScreen.rotation.x = Math.PI * 0.1; // Ligera inclinación hacia arriba para mejor visibilidad
+            digitalScreen.visible = false;
+            
+            scene.add(digitalScreen);
+            
+            // Inicializar el texto
+            window.updateScreenText(0);
+            
+            // Variables para el scroll del texto
+            window.screenTextOffset = 0;
+            
+            // Llamar a la actualización periódicamente para animar
+            setInterval(() => {
+                if (digitalScreen.visible) {
+                    window.updateScreenText(window.screenTextOffset);
+                }
+            }, 100);
+        }
+        
+        function toggleScreen() {
+            isScreenVisible = !isScreenVisible;
+            digitalScreen.visible = isScreenVisible;
+            
+            // Animación de aparición/desaparición con TWEEN
+            if (isScreenVisible) {
+                digitalScreen.scale.set(0.1, 0.1, 0.1);
+                new TWEEN.Tween(digitalScreen.scale)
+                    .to({ x: 0.5, y: 0.5, z: 0.5 }, 1000)
+                    .easing(TWEEN.Easing.Elastic.Out)
+                    .start();
+                
+                new TWEEN.Tween(digitalScreen.rotation)
+                    .to({ z: Math.PI * 2 }, 1000)
+                    .easing(TWEEN.Easing.Quadratic.Out)
+                    .start();
+                
+                document.getElementById('toggleScreen').querySelector('.btn-text').textContent = 'Ocultar Mensaje';
+            } else {
+                new TWEEN.Tween(digitalScreen.scale)
+                    .to({ x: 0.1, y: 0.1, z: 0.1 }, 500)
+                    .easing(TWEEN.Easing.Back.In)
+                    .onComplete(() => {
+                        digitalScreen.visible = false;
+                        digitalScreen.scale.set(0.5, 0.5, 0.5);
+                        digitalScreen.rotation.z = 0;
+                    })
+                    .start();
+                
+                document.getElementById('toggleScreen').querySelector('.btn-text').textContent = 'Mostrar Mensaje';
+            }
+        }
+        
+        function toggleMusic() {
+            const audioPlayer = document.getElementById('audioPlayer');
+            const musicBtn = document.getElementById('toggleMusic');
+            
+            if (isMusicPlaying) {
+                // Pausar música con fade out
+                let vol = audioPlayer.volume;
+                const fadeOut = setInterval(() => {
+                    if (vol > 0.02) {
+                        vol -= 0.02;
+                        audioPlayer.volume = vol;
+                    } else {
+                        clearInterval(fadeOut);
+                        audioPlayer.pause();
+                        isMusicPlaying = false;
+                        musicBtn.classList.remove('music-active');
+                        musicBtn.querySelector('.btn-text').textContent = 'Reproducir';
+                        musicBtn.querySelector('.btn-icon').textContent = '🎵';
+                    }
+                }, 50);
+            } else {
+                // Reproducir música con fade in
+                audioPlayer.play();
+                audioPlayer.volume = 0;
+                isMusicPlaying = true;
+                musicBtn.classList.add('music-active');
+                musicBtn.querySelector('.btn-text').textContent = 'Pausar';
+                musicBtn.querySelector('.btn-icon').textContent = '♫';
+                
+                let vol = 0;
+                const fadeIn = setInterval(() => {
+                    if (vol < 0.5) {
+                        vol += 0.01;
+                        audioPlayer.volume = vol;
+                    } else {
+                        clearInterval(fadeIn);
+                    }
+                }, 50);
+            }
+        }
+        
+        function createCat() {
+            cat = new THREE.Group();
+            
+            // Cuerpo
+            const bodyGeometry = new THREE.SphereGeometry(1.5, 16, 16);
+            bodyGeometry.scale(1.5, 1, 1.2);
+            const bodyMaterial = new THREE.MeshStandardMaterial({
+                color: 0x151515,
+                roughness: 0.8
+            });
+            
+            const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+            body.castShadow = true;
+            body.position.y = 1.5;
+            cat.add(body);
+            
+            // Cabeza
+            const headGeometry = new THREE.SphereGeometry(1, 16, 16);
+            const headMaterial = new THREE.MeshStandardMaterial({
+                color: 0x151515,
+                roughness: 0.7
+            });
+            
+            const head = new THREE.Mesh(headGeometry, headMaterial);
+            head.castShadow = true;
+            head.position.set(1.5, 2.5, 0);
+            cat.add(head);
+            
+            // Orejas
+            const earGeometry = new THREE.ConeGeometry(0.4, 0.8, 4);
+            const earMaterial = new THREE.MeshStandardMaterial({
+                color: 0x0d0d0d,
+                roughness: 0.9
+            });
+            
+            const earLeft = new THREE.Mesh(earGeometry, earMaterial);
+            earLeft.castShadow = true;
+            earLeft.position.set(1.7, 3.3, -0.5);
+            earLeft.rotation.z = -Math.PI / 4;
+            cat.add(earLeft);
+            
+            const earRight = new THREE.Mesh(earGeometry, earMaterial);
+            earRight.castShadow = true;
+            earRight.position.set(1.7, 3.3, 0.5);
+            earRight.rotation.z = -Math.PI / 4;
+            cat.add(earRight);
+            
+            // Ojos
+            const eyeGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+            const eyeMaterial = new THREE.MeshStandardMaterial({
+                color: 0xd4af37,
+                roughness: 0.3,
+                metalness: 0.4,
+                emissive: 0x554411,
+                emissiveIntensity: 0.5
+            });
+            
+            const eyeLeft = new THREE.Mesh(eyeGeometry, eyeMaterial);
+            eyeLeft.position.set(2.1, 2.7, -0.4);
+            cat.add(eyeLeft);
+            
+            const eyeRight = new THREE.Mesh(eyeGeometry, eyeMaterial);
+            eyeRight.position.set(2.1, 2.7, 0.4);
+            cat.add(eyeRight);
+            
+            // Cola
+            const tailCurve = new THREE.CubicBezierCurve3(
+                new THREE.Vector3(-1.5, 1.5, 0),
+                new THREE.Vector3(-3, 2, 0),
+                new THREE.Vector3(-3.5, 3, 0),
+                new THREE.Vector3(-2.5, 4, 0)
+            );
+            
+            const tailGeometry = new THREE.TubeGeometry(tailCurve, 20, 0.2, 8, false);
+            const tailMaterial = new THREE.MeshStandardMaterial({
+                color: 0x0d0d0d,
+                roughness: 0.8
+            });
+            
+            const tail = new THREE.Mesh(tailGeometry, tailMaterial);
+            tail.castShadow = true;
+            cat.add(tail);
+            
+            // Posicionar el gato
+            cat.position.set(0, 0, 10);
+            cat.scale.set(0.8, 0.8, 0.8);
+            scene.add(cat);
+        }
+        
+        // Crear partículas (corazones que flotan)
+        function createParticles() {
+            // Crear geometría de corazón
+            const heartShape = new THREE.Shape();
+            const x = 0, y = 0;
+            
+            heartShape.moveTo(x, y + 1);
+            heartShape.bezierCurveTo(x + 1, y + 1, x + 1.5, y, x, y - 1);
+            heartShape.bezierCurveTo(x - 1.5, y, x - 1, y + 1, x, y + 1);
+            
+            const heartGeometry = new THREE.ExtrudeGeometry(heartShape, {
+                depth: 0.2,
+                bevelEnabled: true,
+                bevelThickness: 0.1,
+                bevelSize: 0.2,
+                bevelSegments: 3
+            });
+            
+            // Crear varios corazones flotantes
+            for (let i = 0; i < 30; i++) {
+                const heartMaterial = new THREE.MeshStandardMaterial({
+                    color: new THREE.Color(
+                        0.9 + Math.random() * 0.1,
+                        0.1 + Math.random() * 0.1,
+                        0.1 + Math.random() * 0.1
+                    ),
+                    roughness: 0.3,
+                    metalness: 0.2,
+                    transparent: true,
+                    opacity: 0.7 + Math.random() * 0.3,
+                    side: THREE.DoubleSide
+                });
+                
+                const heart = new THREE.Mesh(heartGeometry, heartMaterial);
+                heart.scale.set(0.1, 0.1, 0.1);
+                
+                heart.position.set(
+                    THREE.MathUtils.randFloatSpread(60),
+                    2 + Math.random() * 10,
+                    THREE.MathUtils.randFloatSpread(60)
+                );
+                
+                heart.rotation.set(
+                    Math.random() * Math.PI,
+                    Math.random() * Math.PI,
+                    Math.random() * Math.PI
+                );
+                
+                // Propiedades para animación
+                heart.userData = {
+                    rotSpeed: (Math.random() - 0.5) * 0.02,
+                    floatSpeed: 0.2 + Math.random() * 0.3,
+                    floatHeight: 1 + Math.random() * 2,
+                    originalY: heart.position.y,
+                    floatOffset: Math.random() * Math.PI * 2
+                };
+                
+                hearts.push(heart);
+                scene.add(heart);
+            }
+        }
+        
+        // Configurar controles para explorar la escena
+        function setupControls() {
+            // Variables para el control de la cámara con el ratón
+            let isMouseDown = false;
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetRotationX = 0;
+            let targetRotationY = 0;
+            let currentRotationX = 0;
+            let currentRotationY = 0;
+            
+            // Variables para el movimiento con teclado
+            const keys = {
+                w: false,
+                a: false,
+                s: false,
+                d: false
+            };
+            
+            // Eventos de ratón
+            document.addEventListener('mousedown', (event) => {
+                isMouseDown = true;
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+            });
+            
+            document.addEventListener('mouseup', () => {
+                isMouseDown = false;
+            });
+            
+            document.addEventListener('mousemove', (event) => {
+                if (isMouseDown) {
+                    const deltaX = event.clientX - mouseX;
+                    const deltaY = event.clientY - mouseY;
+                    
+                    mouseX = event.clientX;
+                    mouseY = event.clientY;
+                    
+                    targetRotationX -= deltaX * 0.01;
+                    targetRotationY = Math.max(-Math.PI/4, Math.min(Math.PI/4, targetRotationY - deltaY * 0.01));
+                }
+            });
+            
+            // Eventos de teclado
+            document.addEventListener('keydown', (event) => {
+                switch (event.key.toLowerCase()) {
+                    case 'w': keys.w = true; break;
+                    case 'a': keys.a = true; break;
+                    case 's': keys.s = true; break;
+                    case 'd': keys.d = true; break;
+                    case 'e': 
+                        document.getElementById('centeredCard').style.display = 
+                            document.getElementById('centeredCard').style.display === 'flex' ? 'none' : 'flex';
+                        break;
+                }
+            });
+            
+            document.addEventListener('keyup', (event) => {
+                switch (event.key.toLowerCase()) {
+                    case 'w': keys.w = false; break;
+                    case 'a': keys.a = false; break;
+                    case 's': keys.s = false; break;
+                    case 'd': keys.d = false; break;
+                }
+            });
+            
+            // Función para actualizar la posición de la cámara
+            window.updateCamera = function(delta) {
+                // Suavizar la rotación
+                currentRotationX += (targetRotationX - currentRotationX) * 0.1;
+                currentRotationY += (targetRotationY - currentRotationY) * 0.1;
+                
+                // Aplicar rotación
+                camera.rotation.order = 'YXZ';
+                camera.rotation.y = currentRotationX;
+                camera.rotation.x = currentRotationY;
+                
+                // Movimiento basado en teclado
+                const speed = 10 * delta;
+                const direction = new THREE.Vector3();
+                
+                // Obtener la dirección frontal (excluir el componente Y para mantener el movimiento en el plano horizontal)
+                const frontVector = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion);
+                frontVector.y = 0;
+                frontVector.normalize();
+                
+                // Obtener la dirección lateral
+                const rightVector = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
+                rightVector.y = 0;
+                rightVector.normalize();
+                
+                // Aplicar las direcciones según las teclas presionadas
+                if (keys.w) direction.add(frontVector);
+                if (keys.s) direction.sub(frontVector);
+                if (keys.a) direction.sub(rightVector);
+                if (keys.d) direction.add(rightVector);
+                
+                // Normalizar la dirección si hay movimiento
+                if (direction.length() > 0) {
+                    direction.normalize();
+                    camera.position.addScaledVector(direction, speed);
+                    
+                    // Limitar el movimiento dentro de un área
+                    camera.position.x = Math.max(-50, Math.min(50, camera.position.x));
+                    camera.position.z = Math.max(-50, Math.min(50, camera.position.z));
+                    
+                    // Mantener la altura
+                    camera.position.y = 5;
+                }
+            };
+        }
+        
+        // Redimensionar la ventana
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        
+        // Animación de la escena
+        function animate() {
+            requestAnimationFrame(animate);
+            const delta = clock.getDelta();
+            
+            // Actualizar animaciones con TWEEN
+            TWEEN.update();
+            
+            // Actualizar la cámara
+            window.updateCamera(delta);
+            
+            // Animación del sol
+            if (sun) {
+                sun.children[0].scale.x = 1 + Math.sin(clock.getElapsedTime() * 0.5) * 0.1;
+                sun.children[0].scale.y = 1 + Math.sin(clock.getElapsedTime() * 0.5) * 0.1;
+                sun.children[0].scale.z = 1 + Math.sin(clock.getElapsedTime() * 0.5) * 0.1;
+            }
+            
+            // Animación de las palmeras
+            if (palmGroup) {
+                palmGroup.children.forEach((palm, i) => {
+                    palm.children.forEach((part, j) => {
+                        if (j > 0) { // Solo las hojas
+                            part.rotation.z += Math.sin(clock.getElapsedTime() * 0.5 + i * 0.1) * 0.002;
+                            part.rotation.y += Math.sin(clock.getElapsedTime() * 0.3 + i * 0.1) * 0.001;
+                        }
+                    });
+                });
+            }
+            
+            // Animación de las flores
+            if (flowerField) {
+                flowerField.children.forEach((flower, i) => {
+                    flower.rotation.y = Math.sin(clock.getElapsedTime() * 0.3 + i * 0.1) * 0.05;
+                    flower.position.y = Math.sin(clock.getElapsedTime() * 0.5 + i * 0.3) * 0.1;
+                });
+            }
+            
+            // Animación del gato
+            if (cat) {
+                cat.children[cat.children.length - 1].rotation.z = Math.sin(clock.getElapsedTime() * 2) * 0.2; // Cola
+                cat.rotation.y = Math.sin(clock.getElapsedTime() * 0.5) * 0.1; // Cuerpo girando suavemente
+            }
+            
+            // Animación de los corazones
+            hearts.forEach(heart => {
+                const userData = heart.userData;
+                
+                // Rotación
+                heart.rotation.x += userData.rotSpeed;
+                heart.rotation.y += userData.rotSpeed * 1.5;
+                
+                // Movimiento flotante
+                heart.position.y = userData.originalY + 
+                    Math.sin(clock.getElapsedTime() * userData.floatSpeed + userData.floatOffset) * 
+                    userData.floatHeight;
+            });
+            
+            // Animación de la pantalla digital
+            if (digitalScreen && digitalScreen.visible) {
+                // Hacer que la pantalla tenga un suave efecto de resplandor
+                if (digitalScreen.children[0].material) {
+                    const pulseFactor = (Math.sin(clock.getElapsedTime() * 2) + 1) * 0.5;
+                    digitalScreen.children[0].material.emissiveIntensity = 0.1 + pulseFactor * 0.3;
+                }
+            }
+            
+            renderer.render(scene, camera);
+        }
+        
+        // Cerrar el modal inicial
         function closeModal() {
             document.getElementById("myModal").style.display = "none";
-            playSong();
+            setupAudio();
+            document.getElementById('audioPlayer').play();
         }
-
-        function playSong() {
-            const audioPlayer = document.getElementById("audioPlayer");
-            audioPlayer.play();
+        
+        // Ya no necesitamos esta función pues ahora usamos la pantalla 3D
+        function closeCard() {
+            document.getElementById("centeredCard").style.display = "none";
         }
+        
+        // Teclas para controlar la escena
+        document.addEventListener('keydown', function(event) {
+            // 'P' para mostrar/ocultar la pantalla digital
+            if (event.key.toLowerCase() === 'p') {
+                toggleScreen();
+            }
+            
+            // 'M' para controlar la música
+            if (event.key.toLowerCase() === 'm') {
+                toggleMusic();
+            }
+            
+            // Atajos adicionales
+            if (event.key === 'Escape') {
+                // Cerrar cualquier modal o pantalla
+                if (document.getElementById("myModal").style.display === "block") {
+                    closeModal();
+                } else if (isScreenVisible) {
+                    toggleScreen();
+                }
+            }
+        });
+        
+        // Iniciar todo cuando se carga la página
+        window.onload = function() {
+            init();
+            
+            // Mostrar mensaje principal después de cargar
+            setTimeout(() => {
+                document.getElementById("myModal").style.display = "block";
+            }, 2500);
+            
+            // Actualizar el texto de ayuda
+            document.querySelector('.controls-hint').innerHTML = 
+                'WASD: Moverte | Ratón: Mirar | P: Mensaje | M: Música | ↑↓: Desplazar texto';
+                
+            // Auto-mostrar la pantalla digital después de cerrar el modal
+            setTimeout(() => {
+                if (!isScreenVisible) {
+                    toggleScreen();
+                }
+            }, 5000);
+        };
     </script>
 </body>
 </html>
